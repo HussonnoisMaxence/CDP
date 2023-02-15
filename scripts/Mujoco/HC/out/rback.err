@@ -1,0 +1,1065 @@
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/6789/0.9/run_back/tb/events.out.tfevents.1675661057.a100-4.3962243.0results-0.9'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/78906/0.9/run_back/tb/events.out.tfevents.1675661058.a100-4.3962300.0results-0.9'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/89067/0.9/run_back/tb/events.out.tfevents.1675661058.a100-4.3962247.0results-0.9'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/67890/0.9/run_back/tb/events.out.tfevents.1675661058.a100-4.3962299.0results-0.9'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/12345/0.9/run_back/tb/events.out.tfevents.1675661056.a100-4.3961810.0results-0.9'
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-0 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-1 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-2 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-3 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-4 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-5 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-6 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-7 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-8 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/45123/0.9/run_back/videos/smm/skill-9 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-0 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-1 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-2 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-3 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-4 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-5 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-6 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-7 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-8 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/90678/0.9/run_back/videos/smm/skill-9 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-0 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-1 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-2 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-3 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-4 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-5 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-6 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-7 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-8 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/51234/0.9/run_back/videos/smm/skill-9 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-0 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-1 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-2 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-3 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-4 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-5 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-6 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-7 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-8 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/23451/0.9/run_back/videos/smm/skill-9 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-0 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-1 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-2 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-3 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-4 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-5 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-6 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-7 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-8 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/gym/wrappers/record_video.py:41: UserWarning: [33mWARN: Overwriting existing videos at /home/s222126776/Projects/CDP/experiments/Mujoco/HC/beta4/34512/0.9/run_back/videos/smm/skill-9 folder (try specifying a different `video_folder` for the `RecordVideo` wrapper if this is not desired)[0m
+  logger.warn(
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+<__array_function__ internals>:180: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 532, in run
+    self.learning()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 512, in learning
+    plot_skill(
+  File "/home/s222126776/Projects/CDP/utils/oracles.py", line 255, in plot_skill
+    action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/sac.py", line 142, in act
+    obs = torch.FloatTensor(obs).to(self.device)
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+srun: error: a100-4: task 0: Exited with exit code 1
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 71832 ON a100-4 CANCELLED AT 2023-02-09T16:56:15 ***
+slurmstepd: error: *** STEP 71832.1 ON a100-4 CANCELLED AT 2023-02-09T16:56:15 ***
+slurmstepd: error: *** STEP 71832.7 ON a100-4 CANCELLED AT 2023-02-09T16:56:15 ***
+slurmstepd: error: *** STEP 71832.8 ON a100-4 CANCELLED AT 2023-02-09T16:56:15 ***
+slurmstepd: error: *** STEP 71832.6 ON a100-4 CANCELLED AT 2023-02-09T16:56:15 ***

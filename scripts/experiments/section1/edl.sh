@@ -1,0 +1,1 @@
+python main.py -method oracle_cdp -dir experiments/section1/ -config nav2d/oracle/edl.yaml -file_name edl -seed 12345 -train True

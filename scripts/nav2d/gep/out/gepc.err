@@ -1,0 +1,104 @@
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/numpy/lib/npyio.py:518: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  arr = np.asanyarray(arr)
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 517, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 383, in run_exploration
+    print(a)
+NameError: name 'a' is not defined
+srun: error: 4gpu-01: task 0: Exited with exit code 1

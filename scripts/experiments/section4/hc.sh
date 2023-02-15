@@ -1,0 +1,3 @@
+python main.py -method cdp -dir experiments/section4/hc/ -beta 0.3 -config mujoco/hc/cdp_prior.yaml -task run_back -seed 34512 -train True &
+python main.py -method cdp -dir experiments/section4/hc/ -beta 0.5 -config mujoco/hc/cdp_prior.yaml -task run_back -seed 34512 -train True &
+python main.py -method cdp -dir experiments/section4/hc/ -beta 0.9 -config mujoco/hc/cdp_prior.yaml -task run_back -seed 34512 -train True 

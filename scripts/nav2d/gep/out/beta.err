@@ -1,0 +1,298 @@
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/67890/0.7/tb/events.out.tfevents.1666739721.4gpu-23.776413.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/45123/0.7/tb/events.out.tfevents.1666739721.4gpu-23.776388.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/89067/0.7/tb/events.out.tfevents.1666739722.4gpu-23.776383.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/78906/0.7/tb/events.out.tfevents.1666739720.4gpu-23.776353.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/51234/0.7/tb/events.out.tfevents.1666739720.4gpu-23.776390.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/34512/0.7/tb/events.out.tfevents.1666739720.4gpu-23.776391.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/78906/0.4/tb/events.out.tfevents.1666739720.4gpu-23.776614.0cdp-0.4'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/23451/0.7/tb/events.out.tfevents.1666739722.4gpu-23.776385.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/34512/0.4/tb/events.out.tfevents.1666739722.4gpu-23.776606.0cdp-0.4'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/12345/0.4/tb/events.out.tfevents.1666739721.4gpu-23.776570.0cdp-0.4'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/12345/0.7/tb/events.out.tfevents.1666739720.4gpu-23.776380.0cdp-0.7'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/89067/0.4/tb/events.out.tfevents.1666739720.4gpu-23.776608.0cdp-0.4'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/23451/0.4/tb/events.out.tfevents.1666739723.4gpu-23.776586.0cdp-0.4'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/51234/0.4/tb/events.out.tfevents.1666739721.4gpu-23.776605.0cdp-0.4'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/45123/0.4/tb/events.out.tfevents.1666739723.4gpu-23.776590.0cdp-0.4'
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/beta/test5/67890/0.4/tb/events.out.tfevents.1666739720.4gpu-23.776593.0cdp-0.4'
+Traceback (most recent call last):
+  File "./Projects/CDP/main.py", line 59, in <module>
+    main(args)
+  File "./Projects/CDP/main.py", line 40, in main
+    workspace.run()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 514, in run
+    self.run_exploration()
+  File "/home/s222126776/Projects/CDP/workspaces/cdp.py", line 308, in run_exploration
+    action = self.smm.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
+  File "/home/s222126776/Projects/CDP/agent/smm.py", line 259, in act
+    dist = self.actor(obs)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/s222126776/Projects/CDP/agent/actor.py", line 82, in forward
+    dist = SquashedNormal(mu, std)
+  File "/home/s222126776/Projects/CDP/agent/actor.py", line 45, in __init__
+    self.base_dist = pyd.Normal(loc, scale)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/torch/distributions/normal.py", line 50, in __init__
+    super(Normal, self).__init__(batch_shape, validate_args=validate_args)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/torch/distributions/distribution.py", line 55, in __init__
+    raise ValueError(
+ValueError: Expected parameter loc (Tensor of shape (1, 2)) of distribution Normal(loc: torch.Size([1, 2]), scale: torch.Size([1, 2])) to satisfy the constraint Real(), but found invalid values:
+tensor([[nan, nan]], grad_fn=<SplitBackward0>)
+srun: error: 4gpu-01: task 0: Exited with exit code 1
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 45557.1 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** STEP 45557.3 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** STEP 45557.5 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** JOB 45557 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** STEP 45557.2 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** STEP 45557.4 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** STEP 45557.7 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** STEP 45557.6 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+slurmstepd: error: *** STEP 45557.0 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:29 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 45558.6 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** STEP 45558.1 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** STEP 45558.2 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** STEP 45558.0 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** STEP 45558.5 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** JOB 45558 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** STEP 45558.3 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** STEP 45558.7 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***
+slurmstepd: error: *** STEP 45558.4 ON 4gpu-23 CANCELLED AT 2022-10-31T13:35:31 ***

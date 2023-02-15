@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "./Projects/CDP/plot_from_tb.py", line 269, in <module>
+    main(args)
+  File "./Projects/CDP/plot_from_tb.py", line 259, in main
+    plot_speed(path)
+  File "./Projects/CDP/plot_from_tb.py", line 208, in plot_speed
+    timesteps = dic['0.3'][0][dic['0.3'][0].metric.str.endswith("0-speed")].step.to_numpy()
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/pandas/core/generic.py", line 5575, in __getattr__
+    return object.__getattribute__(self, name)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/pandas/core/accessor.py", line 182, in __get__
+    accessor_obj = self._accessor(obj)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/pandas/core/strings/accessor.py", line 177, in __init__
+    self._inferred_dtype = self._validate(data)
+  File "/home/s222126776/Projects/CDP2/env/lib/python3.8/site-packages/pandas/core/strings/accessor.py", line 231, in _validate
+    raise AttributeError("Can only use .str accessor with string values!")
+AttributeError: Can only use .str accessor with string values!

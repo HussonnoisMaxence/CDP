@@ -1,0 +1,131 @@
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48846.1 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** STEP 48846.2 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** STEP 48846.4 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** STEP 48846.5 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** STEP 48846.7 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** STEP 48846.3 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** JOB 48846 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** STEP 48846.6 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+slurmstepd: error: *** STEP 48846.0 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:49 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48847.6 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:51 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48847.1 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:51 ***
+slurmstepd: error: *** JOB 48847 ON 4gpu-07 CANCELLED AT 2022-10-31T13:35:51 ***
+slurmstepd: error: *** STEP 48847.7 ON 4gpu-08 CANCELLED AT 2022-10-31T13:35:51 ***
+slurmstepd: error: *** STEP 48847.3 ON 4gpu-07 CANCELLED AT 2022-10-31T13:35:51 ***
+slurmstepd: error: *** STEP 48847.4 ON 4gpu-07 CANCELLED AT 2022-10-31T13:35:51 ***
+slurmstepd: error: *** STEP 48847.0 ON 4gpu-07 CANCELLED AT 2022-10-31T13:35:51 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48849.4 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** JOB 48849 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** STEP 48849.1 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** STEP 48849.3 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** STEP 48849.7 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** STEP 48849.0 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** STEP 48849.2 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** STEP 48849.6 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+slurmstepd: error: *** STEP 48849.5 ON 4gpu-14 CANCELLED AT 2022-10-31T13:35:52 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 48850 ON 4gpu-17 CANCELLED AT 2022-10-31T13:35:55 ***
+slurmstepd: error: *** STEP 48850.3 ON 4gpu-17 CANCELLED AT 2022-10-31T13:35:55 ***
+slurmstepd: error: *** STEP 48850.7 ON 4gpu-17 CANCELLED AT 2022-10-31T13:35:55 ***
+slurmstepd: error: *** STEP 48850.5 ON 4gpu-17 CANCELLED AT 2022-10-31T13:35:55 ***
+slurmstepd: error: *** STEP 48850.1 ON 4gpu-17 CANCELLED AT 2022-10-31T13:35:55 ***
+slurmstepd: error: *** STEP 48850.0 ON 4gpu-17 CANCELLED AT 2022-10-31T13:35:55 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48852.3 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** STEP 48852.6 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** STEP 48852.5 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** STEP 48852.7 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** STEP 48852.0 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** STEP 48852.1 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** STEP 48852.4 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** JOB 48852 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+slurmstepd: error: *** STEP 48852.2 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:56 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48856.1 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** STEP 48856.3 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** STEP 48856.4 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** JOB 48856 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** STEP 48856.6 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** STEP 48856.5 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** STEP 48856.2 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** STEP 48856.0 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+slurmstepd: error: *** STEP 48856.7 ON 4gpu-01 CANCELLED AT 2022-10-31T13:35:58 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48853.2 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** STEP 48853.0 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** STEP 48853.6 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** STEP 48853.7 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** JOB 48853 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** STEP 48853.4 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** STEP 48853.1 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** STEP 48853.5 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+slurmstepd: error: *** STEP 48853.3 ON 4gpu-13 CANCELLED AT 2022-10-31T13:35:59 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48854.3 ON 4gpu-01 CANCELLED AT 2022-10-31T13:36:00 ***
+slurmstepd: error: *** STEP 48854.6 ON 4gpu-01 CANCELLED AT 2022-10-31T13:36:00 ***
+slurmstepd: error: *** STEP 48854.0 ON 4gpu-01 CANCELLED AT 2022-10-31T13:36:00 ***
+slurmstepd: error: *** STEP 48854.5 ON 4gpu-01 CANCELLED AT 2022-10-31T13:36:00 ***
+slurmstepd: error: *** JOB 48854 ON 4gpu-01 CANCELLED AT 2022-10-31T13:36:00 ***
+slurmstepd: error: *** STEP 48854.7 ON 4gpu-01 CANCELLED AT 2022-10-31T13:36:00 ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 48860.1 ON 4gpu-21 CANCELLED AT 2022-10-31T13:36:07 ***
+slurmstepd: error: *** STEP 48860.2 ON 4gpu-21 CANCELLED AT 2022-10-31T13:36:07 ***
+slurmstepd: error: *** JOB 48860 ON 4gpu-21 CANCELLED AT 2022-10-31T13:36:07 ***
+slurmstepd: error: *** STEP 48860.6 ON 4gpu-21 CANCELLED AT 2022-10-31T13:36:07 ***

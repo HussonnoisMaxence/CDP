@@ -1,0 +1,24 @@
+/home/s222126776/Projects/ev/lib/python3.8/site-packages/gym/spaces/box.py:73: UserWarning: [33mWARN: Box bound precision lowered by casting to float32[0m
+  logger.warn(
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/sw/software/Anaconda3/2020.11/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/home/s222126776/Projects/ev/lib/python3.8/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 164, in _write
+    with io.open(filename, mode, encoding=encoding) as f:
+FileNotFoundError: [Errno 2] No such file or directory: b'/home/s222126776/Projects/CDP/experiments/nav2d/TB/beta/tb/events.out.tfevents.1664518513.4gpu-03.428096.0beta'
+slurmstepd: error: *** JOB 31344 ON 4gpu-03 CANCELLED AT 2022-09-30T16:21:45 ***
+slurmstepd: error: *** JOB 31343 ON 4gpu-03 CANCELLED AT 2022-09-30T16:21:48 ***
+slurmstepd: error: *** JOB 31342 ON 4gpu-21 CANCELLED AT 2022-09-30T16:21:50 ***
+slurmstepd: error: *** JOB 31341 ON 4gpu-21 CANCELLED AT 2022-09-30T16:21:52 ***
+slurmstepd: error: *** JOB 31335 ON 4gpu-21 CANCELLED AT 2022-09-30T16:21:57 ***
+slurmstepd: error: *** JOB 31334 ON 4gpu-21 CANCELLED AT 2022-09-30T16:22:00 ***
+slurmstepd: error: *** JOB 31339 ON 4gpu-21 CANCELLED AT 2022-10-03T12:00:06 ***
