@@ -1,7 +1,9 @@
 import torch
 from abc import ABC, abstractmethod
 import torch.nn as nn
-
+'''
+VQ-VAE implementation taken from https://github.com/victorcampos7/edl
+'''
 def create_nn(input_size, output_size, hidden_size, num_layers, activation_fn=nn.ReLU, input_normalizer=None,
               final_activation_fn=None, hidden_init_fn=None, b_init_value=None, last_fc_init_w=None):
     # Optionally add a normalizer as the first layer

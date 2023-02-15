@@ -2,6 +2,9 @@ from builtins import max, object, print, zip
 import numpy as np
 import torch
 import utils
+'''
+Replay-buffer adapted from from https://github.com/rll-research/BPref
+'''
 
 class ReplayBuffer(object):
     """Buffer to store environment transitions."""

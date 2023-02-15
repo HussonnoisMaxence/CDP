@@ -7,6 +7,7 @@ from workspaces.cdp import Workspace as cdp
 from workspaces.oracle_cdp import Workspace as oracle_cdp
 from workspaces.sac import Workspace as sac
 from workspaces.edl import Workspace as edl
+
 def main(args):
 
     cfg = read_config('config/'+args.config)
@@ -27,7 +28,6 @@ def main(args):
     if args.task !=None:
         cfg['Environment']['config']['Task'] = args.task
         cfg['Logger']['log_dir'] = cfg['Logger']['log_dir']+ str(args.task) + '/'
-
 
 
     if args.method =='cdp':

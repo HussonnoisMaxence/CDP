@@ -14,7 +14,9 @@ import os
 import time
 
 from scipy.stats import norm
-
+'''
+PEBBLE implementation adapted from from https://github.com/rll-research/BPref
+'''
 
 def gen_net(in_size=1, out_size=1, H=[256,256], n_layers=3, activation='tanh'):
     net = []
