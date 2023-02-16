@@ -280,14 +280,14 @@ class Workspace(object):
     def run(self):
 
         states, values, goals = get_oracle(exp_name=self.training_cfg['exp'])
+        
         if self.training_cfg['exp'] == 'edl':
-            self.div_distrib = states
+            self.div_distrib = states.to(self.device)
         else:
             states_p = torch.cat([self.focus(states.to(self.device), value)  for value in values])
             plot_state([states_p], self.logger, info='Focus-',goals=goals, step=1)
             self.div_distrib = states_p
 
-        #print(a)
         self.discover()
         
         self.vmax_qs, self.cm = plot_discriminator(self.device, self.discriminator, self.logger,  step=0) 

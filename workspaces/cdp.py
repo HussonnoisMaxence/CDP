@@ -169,7 +169,7 @@ class Workspace(object):
     def get_shape(self, embedding):
         if embedding == 'state' or embedding == 'state_diff' or embedding == 'next_state':
             shape = self.observation_shape
-        elif embedding == 'prior' or embedding == 'prior_diff' or embedding == 'init_prior_diff':
+        elif embedding == 'prior' or embedding == 'prior_diff' or embedding == 'init_prior_diff'or embedding == 'next_prior':
             shape = self.env.prior_space.shape[0]
         elif embedding == 'state_action':
             shape = self.observation_shape+self.action_shape

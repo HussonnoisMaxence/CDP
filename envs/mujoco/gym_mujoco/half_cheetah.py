@@ -29,7 +29,6 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
                expose_all_qpos=False,
                task='forward',
                target_velocity=None,
-               use_alt_path='./Projects/CDP/',
                model_path='half_cheetah.xml'):
     # Settings from
     # https://github.com/openai/gym/blob/master/gym/envs/__init__.py
@@ -39,7 +38,7 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     self.prior_low_state = np.array([-1]) # x_agent,y_agent, x_goal, y_goal, distance
     self.prior_high_state = np.array([1])
     self.prior_space = gym.spaces.Box(self.prior_low_state, self.prior_high_state, dtype=np.float32)
-    xml_path = use_alt_path + "envs/mujoco/assets/"
+    xml_path = "envs/mujoco/assets/"
     model_path = os.path.abspath(os.path.join(xml_path, model_path))
     self._max_episode_steps = 1000
     mujoco_env.MujocoEnv.__init__(

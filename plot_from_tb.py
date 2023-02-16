@@ -13,7 +13,6 @@ import matplotlib as mpl
 
 def get_dataframe(path):
         runlog_data = pd.DataFrame({"metric": [], "value": [], "step": []})
-        #path = './Projects/Project1N/experiments/nav2d/test/cdp/results-t3/tb/events.out.tfevents.1664408925.4gpu-05.1438093.0'
         event_acc = EventAccumulator(path)
         event_acc.Reload()
         tags = event_acc.Tags()["scalars"]
@@ -25,7 +24,7 @@ def get_dataframe(path):
             r = pd.DataFrame(r)
             runlog_data = pd.concat([runlog_data, r])
         return runlog_data
-    #runlog_data = get_dataframe
+
 def get_files(path, method):
     files = []
     pattern   =  "*/tb/*"+ method
@@ -43,7 +42,7 @@ def plot_lib(labels, color, soft_color, means, stds, timesteps, file_save, x_lab
     #Edl
     i = 0 
     for label, value, std in zip(labels,  means, stds):
-        plt.plot(timesteps, value, color[i%3], label=label) #s=10,c=(i+1)/101, cmap='Greys', marker='+')
+        plt.plot(timesteps, value, color[i%3], label=label) 
         plt.fill_between(timesteps, value-std, value+std, color=soft_color[i%3],alpha=0.3)
         i+=1
 
@@ -51,7 +50,7 @@ def plot_lib(labels, color, soft_color, means, stds, timesteps, file_save, x_lab
     plt.ylabel(y_label ,fontsize=18)
     plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0))
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
-               mode="expand", borderaxespad=0., ncol=5, fontsize='xx-large') #labelspacing=1,  fontsize=20)
+               mode="expand", borderaxespad=0., ncol=5, fontsize='xx-large') 
     plt.grid()
     plt.savefig(file_save)
     plt.clf()
@@ -142,7 +141,7 @@ def plot_speed(path):
             r.append(smooths)
         r = np.array(r)
         for i in range(10):
-            plt.plot(timesteps, r[i], color[i], label="Skill " + str(1+i)) #s=10,c=(i+1)/101, cmap='Greys', marker='+')
+            plt.plot(timesteps, r[i], color[i], label="Skill " + str(1+i))
 
         plt.xlabel('Number of steps',fontsize=18)
         plt.ylabel("HC's velocity" ,fontsize=18)
@@ -158,7 +157,7 @@ def plot_speed(path):
         std.append(rs)
 
     for i, method in enumerate(methods):
-            plt.plot(timesteps, std[i], label='$\u03B2$='+method) #s=10,c=(i+1)/101, cmap='Greys', marker='+')
+            plt.plot(timesteps, std[i], label='$\u03B2$='+method) 
     plt.xlabel('Number of steps',fontsize=18)
     plt.ylabel("Variance between skills's velocity" ,fontsize=16)
     

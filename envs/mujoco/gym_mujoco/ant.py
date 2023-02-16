@@ -44,7 +44,6 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
                expose_body_coms=None,
                expose_body_comvels=None,
                expose_foot_sensors=False,
-               use_alt_path='./Projects/CDP/',
                model_path="ant.xml"):
     self._task = task
     self._expose_all_qpos = expose_all_qpos
@@ -59,7 +58,7 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     self.prior_space = gym.spaces.Box(self.prior_low_state, self.prior_high_state, dtype=np.float32)
     # Settings from
     # https://github.com/openai/gym/blob/master/gym/envs/__init__.py
-    xml_path = use_alt_path + "envs/mujoco/assets/"
+    xml_path =  "envs/mujoco/assets/"
     model_path = os.path.abspath(os.path.join(xml_path, model_path))
     mujoco_env.MujocoEnv.__init__(self, model_path, 5)
     utils.EzPickle.__init__(self)
