@@ -1,1 +1,0 @@
-python main.py -method cdp -dir experiments/section4/0/nav2d/ -config nav2d/gep/beta/cdp.yaml -seed 34512 -beta 0.6 -train True

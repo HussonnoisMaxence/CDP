@@ -39,12 +39,15 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
   def __init__(self,
                task="forward",
-               goal=None,
+               area=None,
                expose_all_qpos=False,
                expose_body_coms=None,
                expose_body_comvels=None,
                expose_foot_sensors=False,
                model_path="ant.xml"):
+    self.record = False
+    self.positions = []
+    self.frames= []
     self._task = task
     self._expose_all_qpos = expose_all_qpos
     self._expose_body_coms = expose_body_coms
@@ -53,12 +56,14 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     self._body_com_indices = {}
     self._body_comvel_indices = {}
     self._goal = np.array([20, 20])
+    self._area = np.array([5, 5, 20, 20])
+    self._center_area = np.array([12.5, 12.5])
     self.prior_low_state = np.array([-1, -1]) # x_agent,y_agent, x_goal, y_goal, distance
     self.prior_high_state = np.array([1, 1])
     self.prior_space = gym.spaces.Box(self.prior_low_state, self.prior_high_state, dtype=np.float32)
     # Settings from
     # https://github.com/openai/gym/blob/master/gym/envs/__init__.py
-    xml_path =  "envs/mujoco/assets/"
+    xml_path = "envs/mujoco/assets/"
     model_path = os.path.abspath(os.path.join(xml_path, model_path))
     mujoco_env.MujocoEnv.__init__(self, model_path, 5)
     utils.EzPickle.__init__(self)
@@ -77,6 +82,8 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
       survive_reward = 1.0
     if self._task == "forward":
       reward = forward_reward - ctrl_cost + survive_reward
+    elif self._task == 'area':
+      forward_reward
     elif self._task == "backward":
       reward = -forward_reward - ctrl_cost + survive_reward
     elif self._task == "left":
@@ -112,6 +119,12 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
       reward = -sideward_reward - ctrl_cost + survive_reward
     elif self._task == "bl":
       reward = -sideward_reward -forward_reward - ctrl_cost + survive_reward
+    elif self._task == "area":
+      if xposafter > self._area[0] and xposafter < self._area[2] and yposafter > self._area[1] and yposafter < self._area[3]:
+        reward = 1 - ctrl_cost + survive_reward
+      else:
+        d = math.sqrt(pow((self._center_area[0] - xposafter), 2) + pow(self._center_area[1] - yposafter, 2))
+        reward = - d/10.0 - ctrl_cost + survive_reward
 
     elif self._task == "goal":
       d = math.sqrt(pow((self._goal[0] - xposafter), 2) + pow(self._goal[1] - yposafter, 2)) #np.linalg.norm(np.array([xposafter, yposafter]) - self._goal)
@@ -124,13 +137,22 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
       reward = np.max(np.abs(np.array([forward_reward, sideward_reward
                                       ]))) - ctrl_cost + survive_reward
 
-
+    if self.record:
+      frame = self.render(mode='rgb_array')
+      self.frames.append(frame)
     state = self.state_vector()
     notdone = np.isfinite(state).all()
     done = not notdone
     ob = self._get_obs()
-    return ob, reward, done, np.array([xvelafter])
-
+    self.positions.append(np.array([xposafter, yposafter]))
+    info = {
+      'x_pos': xposafter ,
+      'y_pos': yposafter,
+      'prior':np.array([xposafter, yposafter]) ,
+      'traj': self.positions,
+      'frames': np.array(self.frames)
+    }
+    return ob, reward, done, info
 
 
     '''
@@ -176,6 +198,7 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     return obs
 
   def reset_model(self):
+    
     qpos = self.init_qpos + self.np_random.uniform(
         size=self.sim.model.nq, low=-.1, high=.1)
     qvel = self.init_qvel + self.np_random.randn(self.sim.model.nv) * .1
@@ -188,7 +211,8 @@ class AntEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     ypos = self.sim.data.qpos.flat[1]
     xvelafter = self.sim.data.qvel[0]
     yvelafter = self.sim.data.qvel[1]
-    return self._get_obs(), np.array([xvelafter])
+    self.positions  = [[xpos,ypos]]
+    return self._get_obs(), np.array([xpos,ypos])
     
   def viewer_setup(self):
     self.viewer.cam.distance = self.model.stat.extent * 2.5

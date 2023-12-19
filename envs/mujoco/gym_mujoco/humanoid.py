@@ -36,6 +36,7 @@ class HumanoidEnv(mujoco_env.MujocoEnv, utils.EzPickle):
                expose_all_qpos=False,
                model_path='humanoid.xml',
                task=None,
+               use_alt_path='./Projects/CDP/',
                goal=None):
 
     self._task = task
@@ -50,7 +51,7 @@ class HumanoidEnv(mujoco_env.MujocoEnv, utils.EzPickle):
       print("Following a trajectory of goals:", self._goal_list)
 
     self._expose_all_qpos = expose_all_qpos
-    xml_path = "envs/mujoco/assets/"
+    xml_path = use_alt_path + "envs/mujoco/assets/"
     model_path = os.path.abspath(os.path.join(xml_path, model_path))
     mujoco_env.MujocoEnv.__init__(self, model_path, 5)
     utils.EzPickle.__init__(self)

@@ -2,12 +2,16 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import math
+
 from utils.networks import TorchRunningMeanStd, to_np, soft_update_params
 
 
 from agent.critic import DoubleQCritic
 from agent.actor import DiagGaussianActor
+'''
+SAC implementation adapted from from https://github.com/rll-research/BPref
+'''
+
 
 def compute_state_entropy(obs, full_obs, k):
     batch_size = 500
@@ -170,16 +174,17 @@ class SACAgent():
         )
     
     def update_critic(self, obs, action, reward, next_obs, 
-                      not_done, logger, timestep, print_flag=True):
-        
-        dist = self.actor(next_obs)
-        next_action = dist.rsample()
-        log_prob = dist.log_prob(next_action).sum(-1, keepdim=True)
-        target_Q1, target_Q2 = self.critic_target(next_obs, next_action)
-        target_V = torch.min(target_Q1,
-                             target_Q2) - self.alpha.detach() * log_prob
-        target_Q = reward + (not_done * self.discount * target_V)
-        target_Q = target_Q.detach()
+                      not_done, metrics):
+        with torch.no_grad():
+            dist = self.actor(next_obs)
+            next_action = dist.rsample()
+
+            log_prob = dist.log_prob(next_action).sum(-1, keepdim=True)
+            target_Q1, target_Q2 = self.critic_target(next_obs, next_action)
+            target_V = torch.min(target_Q1,
+                                target_Q2) - self.alpha * log_prob
+            target_Q = reward + (not_done * self.discount * target_V)
+            target_Q = target_Q
 
         # get current Q estimates
         current_Q1, current_Q2 = self.critic(obs, action)
@@ -192,6 +197,8 @@ class SACAgent():
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
         self.critic_optimizer.step()
+        metrics.update({'SAC/critic_loss':critic_loss})
+        return metrics
 
         #logger.store_data([{'sac/critic_loss' : critic_loss.detach().cpu().numpy()}])
         #logger.log('sac/critic_loss', timestep)
@@ -233,12 +240,12 @@ class SACAgent():
 
     
 
-    def update_actor_and_alpha(self, obs, timestep,logger, print_flag=False):
+    def update_actor_and_alpha(self, obs, metrics):
         dist = self.actor(obs)
         action = dist.rsample()
         log_prob = dist.log_prob(action).sum(-1, keepdim=True)
+        
         actor_Q1, actor_Q2 = self.critic(obs, action)
-
         actor_Q = torch.min(actor_Q1, actor_Q2)
         actor_loss = (self.alpha.detach() * log_prob - actor_Q).mean()
 
@@ -247,6 +254,7 @@ class SACAgent():
         self.actor_optimizer.zero_grad()
         actor_loss.backward()
         self.actor_optimizer.step()
+        
         if self.learnable_temperature:
             self.log_alpha_optimizer.zero_grad()
             alpha_loss = (self.alpha *
@@ -254,26 +262,25 @@ class SACAgent():
 
             alpha_loss.backward()
             self.log_alpha_optimizer.step()
+            metrics.update({'SAC/loss_predict': alpha_loss})
 
-
-    def update(self, replay_buffer, timestep, logger, gradient_update=1):
+        metrics.update({'SAC/actor_loss':actor_loss,
+                        'SAC/alpha': self.alpha})
+        return metrics
+         
+    def update(self, replay_buffer,timestep, gradient_update=1):
+        metrics = {}
         for index in range(gradient_update):
             batch = replay_buffer.sample(self.batch_size)
-
-            print_flag = False
-            if index == gradient_update -1:
-                print_flag = True
                 
-            self.update_critic(batch['obs'], batch['action'], batch['reward'], batch['next_obs'], batch['not_done_no_max'], logger,
-                               timestep, print_flag)
-
+            metrics = self.update_critic(batch['obs'], batch['action'], batch['reward'], batch['next_obs'], batch['not_done_no_max'], metrics)
             
             if timestep % self.actor_update_frequency == 0:
-                self.update_actor_and_alpha(batch['obs'], timestep, logger, print_flag)
+                metrics = self.update_actor_and_alpha(batch['obs'], metrics)
 
         if timestep % self.critic_target_update_frequency == 0:
-            soft_update_params(self.critic, self.critic_target,
-                                     self.critic_tau)
+            soft_update_params(self.critic, self.critic_target, self.critic_tau)
+        return metrics
             
     def update_after_reset(self, replay_buffer, logger, timestep, gradient_update=1, policy_update=True):
         for index in range(gradient_update):

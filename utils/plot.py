@@ -1,629 +1,524 @@
 
 import numpy as np
-import numpy.random
 import matplotlib.pyplot as plt
-import itertools, os
 from utils.utils import get_env
-import torch.nn.functional as F
+import utils.utils as utils
 from utils.networks import eval_mode
 import torch
-
-def plot_rewardskill(reward_model, skill_number, logger, step, info=''):
-    obs = np.array(list(itertools.permutations(np.arange(-1, 1, 2/255.0, dtype=float), 2)))
-
-    nc=skill_number//4
-    fig, axarr = plt.subplots(ncols=nc, nrows=4)
-    for z in range (skill_number):               
-        z_vector = np.zeros(skill_number)
-        z_vector[z] = 1
-        z_vector = np.repeat([z_vector],obs.shape[0], axis=0)
-        obsz = np.concatenate([obs, z_vector], axis=-1)
-        r = reward_model.r_hat_batch(obsz)
-
-
-        obsp = obs
-        x = obsp[:,0]
-        y = obsp[:,1]
-        obsp = [[o]for o in obsp]
-
-        vmin = -1
-        vmax = 1
-
-        ax = axarr.flatten()[z]
-
-        sc = ax.scatter(x, y, s=3, marker='o', c=r, vmin=vmin, vmax=vmax, cmap='bwr')
-        ax.set_xlim(-1, 1)
-        ax.set_ylim(-1, 1)
+from matplotlib.collections import PathCollection
+from matplotlib.legend_handler import HandlerPathCollection
+import numpy as np
+import matplotlib as mpl
+from PIL import Image, ImageDraw
+from gym.wrappers import RecordVideo
 
 
 
-    for idx in range(skill_number):
-            axarr.flatten()[idx].axis('off')
-    cbar = fig.colorbar(sc,ax=axarr.ravel().tolist(), shrink=0.3, orientation="horizontal", pad=0.1)
+clist = ['b','orange', 'purple', 'y', 'r', 'pink', 'green', 'brown', 'cyan', 'violet', ' chocolat', 'teal']
+color = ['green', 'red', 'blue', 'orange', 'sienna', 'blueviolet', 'teal', 'grey']
+soft_color = ['lightgreen', 'darksalmon', 'lightskyblue', 'gold', 'sandybrown', 'plum', 'lightblue', 'lightgrey']
 
-    isExist = os.path.exists(logger.path+'/reward/')
-    if not isExist:
-            os.makedirs(logger.path+'/reward/')
-    plt.savefig(logger.path+'/reward/'+info+str(step)+'.png')
+def export_legend(legend, filename="legend.png"):
+    fig  = legend.figure
+    fig.canvas.draw()
+    bbox  = legend.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+    fig.savefig(filename, dpi="figure", bbox_inches=bbox)
+def update(handle, orig):
+    handle.update_from(orig)
+    handle.set_sizes([100])
+
+
+## Plot related to the discriminator
+def plot_discr_region_pref(device, reward_model, discriminator, info):
+    obs = np.array(utils.get_pairs(-1, 1, 0.005) )
+    obs_tensor = torch.tensor(obs, dtype=torch.float).to(device)
+    dataset = reward_model.f_hat_batch(obs_tensor, tensor=True)
+
+    x = obs[:,0]
+    y = obs[:,1]
+    obs = [[o]for o in obs]
+    vmin = -5
+    vmax = 0    
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+    color_mapping = []
+    with torch.no_grad():
+        for emb_idx in (range(discriminator.codebook_size)):
+            s = discriminator.get_centroids(dict(skill=torch.tensor(emb_idx).to(device)))[0].detach().cpu().numpy()
+
+            m = plt.plot(s[0], s[1], marker='o', markersize=5, label='Code #{}'.format(emb_idx))
+            color_mapping.append(m[0].get_color())
+        plt.clf()
+        color_mapping_rgb = [list(int(h.lstrip('#')[i:i+2], 16)for i in (0, 2, 4)) for h in color_mapping]
+
+
+        z_q_x = discriminator.vq.quantize(discriminator.encoder(dataset)).detach().cpu().numpy()
+        c = []
+        plt.scatter(x, y, c=[color_mapping[z] for z in z_q_x], s=1, marker='o')
+        for emb_idx in (range(discriminator.codebook_size)):
+            s = discriminator.get_centroids(dict(skill=torch.tensor(emb_idx).to(device)))[0] #.detach().cpu().numpy()
+
+            b = s.repeat((dataset.shape[0],1))
+
+            b = torch.square(b-dataset).mean(dim=-1)
+
+            s = obs_tensor[torch.argmin(b)].detach().cpu().numpy()
+
+            #print(s)
+            m = plt.scatter(s[0], s[1],  edgecolor='black', linewidth=0.7,linestyle=':',  label='Skill {}'.format(emb_idx+1))
+            c.append(s)
+    plt.axis([-1, 1, -1, 1])
+    ax = plt.gca()
+    ax.axes.xaxis.set_visible(False)
+    ax.axes.yaxis.set_visible(False)
+    
+
+    dir = f"{info['dir']}/discriminator/region"
+    utils.create_directories(dir)
+    if info['get_legends']:
+        lgnd = plt.legend(
+             bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
+                   mode="expand", borderaxespad=0., ncol=3, fontsize='xx-large', scatterpoints=1,
+             handler_map={PathCollection : HandlerPathCollection(update_func=update)}) 
+
+        export_legend(lgnd, filename=f"{dir}/legend.pdf")
+
+
+    
+    if info['pdf']:
+          plt.savefig(f"{dir}/{info['timestep']}.pdf")
+
+    
+    plt.savefig(f"{dir}/{info['timestep']}.png")
     plt.clf()
+    plt.close()
+    return c, color_mapping
+
+def plot_discr_region(device, discriminator, info):
+    obs = utils.get_pairs(-1, 1, 0.005) 
+    obs = torch.tensor(np.array(obs), dtype=torch.float)
+    dataset = obs.to(device)
+    obs = obs.detach().cpu().numpy()
+    x = obs[:,0]
+    y = obs[:,1]
+    obs = [[o]for o in obs]
+    vmin = -5
+    vmax = 0    
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+    color_mapping = []
+    with torch.no_grad():
+        for emb_idx in (range(discriminator.codebook_size)):
+            s = discriminator.get_centroids(dict(skill=torch.tensor(emb_idx).to(device)))[0].detach().cpu().numpy()
+
+            m = plt.plot(s[0], s[1], marker='o', markersize=5, label='Code #{}'.format(emb_idx))
+            color_mapping.append(m[0].get_color())
+        plt.clf()
+        color_mapping_rgb = [list(int(h.lstrip('#')[i:i+2], 16)for i in (0, 2, 4)) for h in color_mapping]
 
 
-def plot_reward(reward_model, logger, step, info=''):
-    obs = np.array(list(itertools.permutations(np.arange(-1, 1, 2/255.0, dtype=float), 2)))
+        z_q_x = discriminator.vq.quantize(discriminator.encoder(dataset)).detach().cpu().numpy()
+        c = []
+        plt.scatter(x, y, c=[color_mapping[z] for z in z_q_x], s=1, marker='o')
+        for emb_idx in (range(discriminator.codebook_size)):
+            s = discriminator.get_centroids(dict(skill=torch.tensor(emb_idx).to(device)))[0].detach().cpu().numpy()
+            #print(s)
+            m = plt.scatter(s[0], s[1],  edgecolor='black', linewidth=0.7,linestyle=':',  label='Skill {}'.format(emb_idx+1))
+            c.append(s)
+    plt.axis([-1, 1, -1, 1])
+    ax = plt.gca()
+    ax.axes.xaxis.set_visible(False)
+    ax.axes.yaxis.set_visible(False)
+    
 
-    z = reward_model.r_hat_batch(obs)
+    dir = f"{info['dir']}/discriminator/region"
+    utils.create_directories(dir)
+    if info['get_legends']:
+        lgnd = plt.legend(
+             bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
+                   mode="expand", borderaxespad=0., ncol=4, fontsize='xx-large', scatterpoints=1,
+             handler_map={PathCollection : HandlerPathCollection(update_func=update)}) 
+
+        export_legend(lgnd, filename=f"{dir}/legend.pdf")
 
 
-    obs = obs
+    
+    if info['pdf']:
+          plt.savefig(f"{dir}/{info['timestep']}.pdf")
+
+    
+    plt.savefig(f"{dir}/{info['timestep']}.png")
+    plt.clf()
+    plt.close()
+    return c, color_mapping
+
+
+## Plot related to the rewards
+def plot_reward_nc(rewards, obs,  info):
+
     x = obs[:,0]
     y = obs[:,1]
     obs = [[o]for o in obs]
 
     vmin = -1
     vmax = 1
-    fig, axarr = plt.subplots(ncols=1, nrows=1)
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+    ax = plt.gca()
 
-    ax = axarr
-
-    sc = ax.scatter(x, y, s=3, marker='o', c=z, vmin=vmin, vmax=vmax, cmap='bwr')
+    plt.scatter(x, y, s=3, marker='o', c=rewards, vmin=vmin, vmax=vmax, cmap='bwr')
     ax.set_xlim(-1, 1)
     ax.set_ylim(-1, 1)
-    ax.set_title('rew', fontsize=14)
+    ax.axes.xaxis.set_visible(False)
+    ax.axes.yaxis.set_visible(False)
 
+    #ax.set_title('Reward from Human Preferences', fontsize=14)
+    cbar = plt.colorbar(cmap='bwr', orientation="vertical", pad=0.025)
+    cbar.set_label('Reward value', fontsize='xx-large')
+    dir =f"{info['dir']}/rewards"
+    utils.create_directories(dir)
+    if info['get_legends']:
+        legend = plt.legend(
+             bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', 
+             mode="expand", borderaxespad=0., ncol=3, fontsize='xx-large', scatterpoints=1,
+             handler_map={PathCollection : HandlerPathCollection(update_func=update)}) 
+        export_legend(legend, filename=f"{dir}/legend_{info['timestep']}.pdf")
 
+    plt.savefig(f"{dir}/{info['timestep']}.png")
+    if info['pdf']:
+          plt.savefig(f"{dir}/{info['timestep']}.pdf")
 
-
-    cbar = fig.colorbar(sc, ax=axarr, shrink=0.3, orientation="horizontal", pad=0.1)
-
-    isExist = os.path.exists(logger.path+'/reward/')
-    if not isExist:
-            os.makedirs(logger.path+'/reward/')
-    plt.savefig(logger.path+'/reward/'+info+str(step)+'.png')
-    plt.clf()
-
-
-def plot_heatmapF(device, discriminator, logger, step=-1):
-    obs = torch.tensor(np.array(list(itertools.permutations(np.arange(-255, 255, 2, dtype=float), 2))), dtype=torch.float)/255.0
-    dataset = obs.to(device)
-
-    obs = obs.detach().cpu().numpy()
-
-    obs = obs*255.0
-    x = obs[:,0]
-    y = obs[:,1]
-    obs = [[o]for o in obs]
-    vmin = -5
-    vmax = 0    
-
-    nc=discriminator.codebook_size//2
-    fig, axarr = plt.subplots(ncols=nc, nrows=2)
-    vmax_qs = []
-    for i in range(discriminator.codebook_size):
-            z = torch.full((len(dataset),), i, dtype=torch.long).to(device)
-            logprobs = discriminator.log_approx_posterior(dict(next_state=dataset, skill=z)).detach().cpu().numpy()
-            vmin = min(logprobs)
-            vmax = max(logprobs)
-            idxs = np.where(logprobs==vmax)
-            #print(idxs)
-            
-            ax = axarr.flatten()[i]
-            
-            sc = ax.scatter(x, y, s=3, marker='o', c=logprobs, cmap='bwr')
-            ax.set_xlim(-255, 255)
-            ax.set_ylim(-255, 255)
-            ax.set_title('z'+str(i), fontsize=14)
-            vmax_qs.append((x[idxs], y[idxs]))
- 
-    for idx in range(discriminator.codebook_size):
-            axarr.flatten()[idx].axis('off')
-
-    cbar = fig.colorbar(sc, ax=axarr.ravel().tolist(), shrink=0.3, orientation="horizontal", pad=0.1)
-
-    isExist = os.path.exists(logger.path+'/heatmapF/')
-    if not isExist:
-            os.makedirs(logger.path+'/heatmapF/')
-    plt.savefig(logger.path+'/heatmapF/VQrewards'+str(step)+'.png')
-    plt.clf()
     
-
-
-def heat_mapVQ(device, discriminator, logger, step=-1):
-    obs = torch.tensor(np.array(list(itertools.permutations(np.arange(-1, 1, 2/255.0, dtype=float), 2))), dtype=torch.float)
-    dataset = obs.to(device)
-
-    obs = obs.detach().cpu().numpy()
-
-    obs = obs
-    x = obs[:,0]
-    y = obs[:,1]
-    obs = [[o]for o in obs]
-    vmin = -5
-    vmax = 0    
-
-    nc=discriminator.codebook_size//2
-    fig, axarr = plt.subplots(ncols=nc, nrows=2)
-    vmax_qs = []
-    for i in range(discriminator.codebook_size):
-            z = torch.full((len(dataset),), i, dtype=torch.long).to(device)
-            logprobs = discriminator.compute_logprob_under_latent(dict(next_state=dataset, skill=z)).detach().cpu().numpy()
-            vmin = min(logprobs)
-            vmax = max(logprobs)
-            idxs = np.where(logprobs==vmax)
-            #print(idxs)
-            
-            ax = axarr.flatten()[i]
-            
-            sc = ax.scatter(x, y, s=3, marker='o', c=logprobs, vmin=vmin, vmax=vmax, cmap='bwr')
-            sc = ax.scatter(x[idxs], y[idxs], s=9, marker='*', c='y', vmin=vmin, vmax=vmax,)
-            ax.set_xlim(-1, 1)
-            ax.set_ylim(-1, 1)
-            ax.set_title('z'+str(i), fontsize=14)
-            vmax_qs.append((x[idxs], y[idxs]))
- 
-    for idx in range(discriminator.codebook_size):
-            axarr.flatten()[idx].axis('off')
-
-    cbar = fig.colorbar(sc, ax=axarr.ravel().tolist(), shrink=0.3, orientation="horizontal", pad=0.1)
-
-    isExist = os.path.exists(logger.path+'/heatmap/')
-    if not isExist:
-            os.makedirs(logger.path+'/heatmap/')
-    plt.savefig(logger.path+'/heatmap/VQrewards'+str(step)+'.png')
     plt.clf()
-    
-    #######################################################################################################################################################
-
-    fig, axarr = plt.subplots(ncols=2, nrows=1, figsize=(20,10))
-    ax = axarr[0]
-    color_mapping = []
-    for emb_idx in (range(discriminator.codebook_size)):
-        s = discriminator.get_centroids(dict(skill=torch.tensor(emb_idx).to(device)))[0].detach().cpu().numpy()
-        #print(s)
-        m = ax.plot(s[0], s[1], marker='o', markersize=5, label='Code #{}'.format(emb_idx))
-        color_mapping.append(m[0].get_color())
-        ax.set_xlim(-1, 1)
-        ax.set_ylim(-1, 1)
-    color_mapping_rgb = [list(int(h.lstrip('#')[i:i+2], 16)for i in (0, 2, 4)) for h in color_mapping]
-    
-    legend = ax.legend(loc='upper right', bbox_to_anchor=(2.4, 1), fontsize=12, ncol=1)
-    ax = axarr[1]
-    z_q_x = discriminator.vq.quantize(discriminator.encoder(dataset)).detach().cpu().numpy()
-    plt.scatter(x, y, c=[color_mapping[z] for z in z_q_x], s=3, marker='o')
-    plt.scatter(x, y, c=[color_mapping[z] for z in z_q_x], s=3, marker='o')
-    ax.set_xlim(-1,1)
-    ax.set_ylim(-1, 1)
-    plt.savefig(logger.path+'/heatmap/SkillAssignement'+str(step)+'.png')
-    plt.clf()
-
-    return vmax_qs
-
-def plot_centroid(discriminator,device, logger, info, step=-1):
-    for emb_idx in (range(discriminator.codebook_size)):
-        s = discriminator.get_centroids(dict(skill=torch.tensor(emb_idx).to(device)))[0].detach().cpu().numpy()
-        print(s, emb_idx)
-
-        if len(s) == 1:
-            plt.scatter(s[0], emb_idx)
-        else:
-            plt.scatter(s[0], s[1], s=1)
-    plt.legend()
-    isExist = os.path.exists(logger.path+'/centroids/')
-    if not isExist:
-            os.makedirs(logger.path+'/centroids/')
-    plt.savefig(logger.path+'/centroids/'+info+str(step)+'.png')
-    plt.clf()
+    plt.close()
 
 
 
 
-def plot_state(datas, logger, info, step=-1):
+
+## Plot related to exploration
+def plot_state(datas, info, area=None):
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+    ax = plt.gca()
+    area = info['area']
+    if not(area == None):
+        if len(area)==4:
+            ax.add_patch(
+                 plt.Rectangle(
+                      [area[0],area[1]],
+                      area[2]-area[0],area[3]-area[1],
+                      facecolor='y', 
+                      fill=False,
+                      label='Target Region',
+                      edgecolor='y',
+                      linewidth=2.5,
+                      zorder=1))
+        if len(area)==2:
+             ax.plot(area[0], area[1], marker="*", color='y', label='Target Region Center')
+
     for label, data in enumerate(datas):
-        obs = data.detach().cpu().numpy()
-
-
-
+        obs = data
         obs = obs
         x = obs[:,0]
         y = obs[:,1]
+        plt.scatter(x, y, s=1,label='Preferred Region', zorder=-1)
 
 
-        plt.scatter(x, y, s=1,label=label)
-    plt.axis([-1, 1, -1, 1])
+
+  
+    
+    plt.scatter(0, 0, s=60, marker='+', color='r', label='Initial State')
+    if info['env'] != 'Ant':
+        ax.set_xlim(-1, 1)
+        ax.set_ylim(-1, 1)
+        ax.axes.xaxis.set_visible(False)
+        ax.axes.yaxis.set_visible(False)
+
+    dir =f"{info['dir']}/coverage/{info['prefix']}"
+    utils.create_directories(dir)
+
+    if info['get_legends']:
+        lgnd = plt.legend(
+             bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', 
+             mode="expand", borderaxespad=0., ncol=3, fontsize='xx-large', scatterpoints=1,
+             handler_map={PathCollection : HandlerPathCollection(update_func=update)}) 
+
+        export_legend(lgnd, filename=f"{dir}/legend_{info['prefix']}.pdf")
+
+
+    plt.savefig(f"{dir}/{info['timestep']}.png")
+    if info['pdf']:
+          plt.savefig(f"{dir}/{info['timestep']}.pdf")
 
     
-    plt.legend()
-    isExist = os.path.exists(logger.path+'/coverage/')
-    if not isExist:
-            os.makedirs(logger.path+'/coverage/')
-    plt.savefig(logger.path+'/coverage/'+info+str(step)+'.png')
     plt.clf()
+    plt.close()
+    
+def plot_state_visited(data, info):
 
-import matplotlib.colors as colors
-def plot_skill(agent, env, logger, skill_number, training_config, vmax_qs=None, timestep=-1,infop=''):
-    step_max = training_config['step_max']
-    fig, ax = plt.subplots(ncols=1, nrows=1)
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
 
-    for i in range (skill_number):
-        ## plot variable
-        X,Y = [], []
-        #Initiate the episode
-        obs = env.reset()
-        done = False
-        episode_step = 0
-        #sample skills
-        z_vector = np.zeros(skill_number)
-        z_vector[i] = 1
-        while not(done):
-            with eval_mode(agent):
-                action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
-            obs, reward, done, info = env.step(action)
-            done = True if episode_step + 1 == step_max else False
-            #done = True if episode_step == step_max else done
-            episode_step +=1
-            X.append(obs[0])
-            Y.append(obs[1])
+    reds = plt.get_cmap("Reds")
+    norm = mpl.colors.Normalize(vmin=0, vmax=101)
+    #cmap = mpl.cm.ScalarMappable(norm=norm, cmap=mpl.cm.Blues)
 
-        ax.plot(X, Y, label=str(i))
-        if vmax_qs!=None:
-            ax.plot(vmax_qs[i][0], vmax_qs[i][1], marker="*", label=str(i))
+    #size = x.shape[0]//4
+    #t = 1
+    cmap = mpl.cm.ScalarMappable(norm=norm, cmap='YlOrRd')
+    for index, traj in enumerate(data):
+        if not(index%3):
+            for i, el in enumerate(traj[0]):
+                if not(i%8):
+                    x = el[0]
+                    y = el[1]
+                    plt.scatter(x, y, s=0.7, color=cmap.to_rgba(i+1))
+    ax = plt.gca()
+    area = info['area']
+    ax.add_patch(
+        plt.Rectangle(
+        [area[0],area[1]],
+        area[2]-area[0],area[3]-area[1],
+        facecolor='y', 
+        fill=False,
+        label='Target Region',
+        edgecolor='y',
+        linewidth=2.5,
+        zorder=1))
+    
     plt.axis([-1, 1, -1, 1])
-    #loger.plot(label=i, color=colors_list[i])
-    isExist = os.path.exists(logger.path+'/skill'+infop+'/')
-    if not isExist:
-            os.makedirs(logger.path+'/skill'+infop+'/')
-    plt.savefig(logger.path+'/skill'+infop+'/'+str(timestep)+'.png')
+    cbar = plt.colorbar(cmap, orientation = 'horizontal')
+    cbar.set_label('Steps', fontsize='xx-large')
+
+    ax = plt.gca()
+    ax.set_xlim(-1.1, 1.1)
+    ax.set_ylim(-1.1, 1.1)
+    ax.axes.xaxis.set_visible(False)
+    ax.axes.yaxis.set_visible(False)
+
+
+
+    dir =f"{info['dir']}/exploration/state_visited"
+    utils.create_directories(dir)
+    if info['get_legends']:
+        legend = plt.legend(
+             bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', 
+             mode="expand", borderaxespad=0., ncol=3, fontsize='xx-large', scatterpoints=1,
+             handler_map={PathCollection : HandlerPathCollection(update_func=update)}) 
+        export_legend(legend, filename=f"{dir}/legend_{info['timestep']}.pdf")
+    plt.savefig(f"{dir}/states_visited_{info['timestep']}.png")
+    if info['pdf']:
+        plt.savefig(f"{dir}/states_visited_{info['timestep']}.pdf")
     plt.clf()
-    print('***Plot skill***')
+    plt.close()
+
+def plot_state_hc(datas, info, area=None):
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+    ax = plt.gca()
+    area = info['area']
+    if not(area == None):
+        if len(area)==2:
+            ax.axvline(x = area[0], color='y', label='Target Region')
+            ax.axvline(x = area[1], color='y', label='Target Region2')
+    for label, data in enumerate(datas):
+        obs = data
+        obs = obs
+        x = obs
+        y = np.zeros_like(obs)
+        plt.scatter(x, y, s=1,label='Preferred Region', zorder=-1)
 
 
-def plot_skillHC(agent, env, logger, skill_number, training_cfg, timestep=-1,infop=''):
-    step_max = training_cfg['step_max']
-    fig, axarr = plt.subplots(ncols=3, nrows=2)
 
-    for i in range (skill_number):
-        ## plot variable
-        X0,Y0 = [], []
-        X1,Y1 = [], []
-        X2,Y2 = [], []
-        X3,Y3 = [], []
-        X4,Y4 = [], []
-        X5,Y5 = [], []
-        #Initiate the episode
-        if training_cfg['prior']:
-            obs, prior = env.reset()
-        else:
-            obs = env.reset()
-        done = False
-        episode_step = 0
-        #sample skills
-        z_vector = np.zeros(skill_number)
-        z_vector[i] = 1
-        while not(done):
-            with eval_mode(agent):
-                action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
-            obs, reward, done, info = env.step(action)
-            done = True if episode_step == step_max -1 else done
-            #done = True if episode_step == step_max else done
-            episode_step +=1
-            #plot X pos
-            X0.append(info[0])
-            Y0.append(10*i)
+  
+    
+    plt.scatter(0, 0, s=60, marker='+', color='r', label='Initial State')
 
-            #plot Z pos
-            X1.append(obs[0])
-            Y1.append(10*i)
-            #plot XZ pos
-            X2.append(info[0])
-            Y2.append(obs[0])
-            #plot X s
-            X3.append(obs[8])
-            Y3.append(10*i)
-            #plot Z s
-            X4.append(obs[9])
-            Y4.append(10*i)
-            #plot XZ s
-            X5.append(obs[8])
-            Y5.append(obs[9])
-        axarr[0][0].plot(X0, Y0, label=str(i))
-        axarr[0][1].plot(X1, Y1, label=str(i))
-        axarr[0][2].plot(X2, Y2, label=str(i))
-        axarr[1][0].plot(X3, Y3, label=str(i))
-        axarr[1][1].plot(X4, Y4, label=str(i))
-        axarr[1][2].plot(X5, Y5, label=str(i))
-    #loger.plot(label=i, color=colors_list[i])
-    isExist = os.path.exists(logger.path+'/skill'+infop+'/')
-    if not isExist:
-            os.makedirs(logger.path+'/skill'+infop+'/')
-    plt.savefig(logger.path+'/skill'+infop+'/'+str(timestep)+'.png')
+
+
+    dir =f"{info['dir']}/coverage/{info['prefix']}"
+    utils.create_directories(dir)
+
+    if info['get_legends']:
+        lgnd = plt.legend(
+             bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', 
+             mode="expand", borderaxespad=0., ncol=3, fontsize='xx-large', scatterpoints=1,
+             handler_map={PathCollection : HandlerPathCollection(update_func=update)}) 
+
+        export_legend(lgnd, filename=f"{dir}/legend_{info['prefix']}.pdf")
+
+
+    plt.savefig(f"{dir}/{info['timestep']}.png")
+    if info['pdf']:
+          plt.savefig(f"{dir}/{info['timestep']}.pdf")
+
+    
     plt.clf()
-    print('***Plot skill***')
-from gym.wrappers import RecordVideo
-def run_test_videos(agent, env_name, logger, skill_number, training_cfg, info=''):
-    step_max = training_cfg['step_max']
-    for i in range (skill_number):
-        #Initiate the episode
-        env = RecordVideo(get_env(env_name), logger._log_dir + "/videos/"+info+"/skill-"+str(i))
-        if training_cfg['prior']:
-            obs, prior = env.reset()
-        else:
-            obs = env.reset()
-        done = False
-        episode_step = 0
-        #sample skills
-        z_vector = np.zeros(skill_number)
-        z_vector[i] = 1
-        while not(done):
-            with eval_mode(agent):
-                action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
-            obs, reward, done, _ = env.step(action)
-            done = True if episode_step == step_max-1 else done
-            episode_step +=1
-        print('step', episode_step)
-    print('***End test***')
+    plt.close()
 
-import math
-def target_reward(pos, goal=[200/255.0,200/255.0]):
-    dist = math.sqrt(pow((goal[0] - pos[0]), 2) + pow((goal[1]  - pos[1]), 2))
-    norm = 1 #math.sqrt(pow((2), 2) + pow((2), 2))
-    done = bool(dist <= 5/255.0)
-    if done:
-        return 1
+## Plot related to trajectory
+def plot_traj_hc(data):
+
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+
+    if data['color_mapping'] == None:
+        data['color_mapping'] = clist[:len(data['traj'])]
+        
+    for i, data_traj in enumerate(data['traj']):
+        traj= np.array(data_traj)
+        X, Y = traj, np.ones_like(traj)*(i+2)
+ 
+        plt.plot(X, Y, label='Skill '+str(1+i), c=data['color_mapping'][i], linewidth=1 ,zorder=-1)
+
+     
+    dir =f"{data['dir']}/{data['phase']}/Skills"
+    utils.create_directories(dir)
+    if data['get_legends']:
+        legend = plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
+                mode="expand", borderaxespad=0., ncol=4, fontsize='xx-large')
+        export_legend(legend, filename=f"{dir}/legend_skills_{data['timestep']}.pdf")
+    plt.savefig(f"{dir}/skills_{data['timestep']}.png")
+    if data['pdf']:
+        plt.savefig(f"{dir}/skills_{data['timestep']}.pdf")
+    plt.clf()
+    plt.close()
+
+def plot_traj(data):
+
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+
+    if data['color_mapping'] == None:
+        data['color_mapping'] = clist[:len(data['traj'])]
+
+    for i, data_traj in enumerate(data['traj']):
+        traj= np.array(data_traj)
+        X, Y = traj[:,0], traj[:,1]
+
+        plt.plot(X, Y, label='Skill '+str(1+i), c=data['color_mapping'][i], linewidth=1 ,zorder=-1)
+        plt.scatter(data['centroids'][i][0], data['centroids'][i][1], s=160, marker="*", edgecolor='black', c=data['color_mapping'][i], linewidth=0.7,zorder=1)
+        #ax.scatter(X[-1], Y[-1],marker='*',s=80, color='k')
+        
+    if data['env'] != 'Ant':
+        ax = plt.gca()
+        ax.set_xlim(-1.1, 1.1)
+        ax.set_ylim(-1.1, 1.1)
+        ax.axes.xaxis.set_visible(False)
+        ax.axes.yaxis.set_visible(False)
+
+        if data['plot_area']:
+            area = data['area']    
+            ax.add_patch(
+                plt.Rectangle(
+                    [area[0],area[1]],
+                    area[2]-area[0],area[3]-area[1],
+                    facecolor='y', 
+                    fill=False,
+                    #label='Target Region',
+                    edgecolor='y',
+                    linewidth=2.5,
+                    zorder=1))
+     
+    dir =f"{data['dir']}/{data['phase']}/Skills"
+    utils.create_directories(dir)
+    if data['get_legends']:
+        legend = plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
+                mode="expand", borderaxespad=0., ncol=4, fontsize='xx-large', scatterpoints=1,
+             handler_map={PathCollection : HandlerPathCollection(update_func=update)})
+        export_legend(legend, filename=f"{dir}/legend_skills_{data['timestep']}.pdf")
+    plt.savefig(f"{dir}/skills_{data['timestep']}.png")
+    if data['pdf']:
+        plt.savefig(f"{dir}/skills_{data['timestep']}.pdf")
+    plt.clf()
+    plt.close()
+
+def save_frames(info):
+    dir =f"{info['dir']}/{info['phase']}/Skills_record/{info['timestep']}"
+    utils.create_directories(dir)
+    for z, traj in enumerate(info['frames']):
+        imgs = [Image.fromarray(img) for img in traj]
+        # duration is the number of milliseconds between frames; this is 40 frames per second
+        imgs[0].save(f"{dir}/Skill_{z}.gif", save_all=True, append_images=imgs[1:], duration=50, loop=1)
+
+def plot_velocity(datas):
+    x_label = "# of steps"
+    y_label = "F1 Score"
+    plt.figure(figsize=(10.4, 8.8), dpi=500 )
+    ax = plt.gca()
+    x = np.arange(0,100)
+    for index, velocity in enumerate(datas['velocities']):
+        plt.plot(x,velocity, label=f"Skill {index}") #s=10,c=(i+1)/101, cmap='Greys', marker='+')
+
+    plt.xlabel(x_label,fontsize=27)
+    plt.ylabel(y_label ,fontsize=27)
+    plt.ticklabel_format(axis="x", style="sci", scilimits=(0,0))
+    ax = plt.gca()
+    # We change the fontsize of minor ticks label 
+    ax.tick_params(axis='both', which='major', labelsize=15)
+    ax.tick_params(axis='both', which='minor', labelsize=12)
+    
+
+    legend = plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
+                    mode="expand", borderaxespad=0., ncol=len(datas['velocities']), fontsize='x-large', scatterpoints=1,
+
+
+
+                handler_map={PathCollection : HandlerPathCollection(update_func=update)}) 
+    dir =f"{datas['dir']}/skill_velocity"
+    utils.create_directories(dir)
+    export_legend(legend, filename=f"{dir}/legend.pdf")
+    legend.remove()
+        #labelspacing=1,  fontsize=20)
+        
+        
+    plt.grid()
+    plt.savefig(f"{dir}/plot.png")
+    if datas['pdf']:
+          plt.savefig(f"{dir}/plot.pdf")
+    plt.clf()
+
+    plt.close()
+
+
+def plot_pos(datas):
+    img = Image.new("RGBA", (6800, 3300), (255, 255, 255, 1))
+    draw = ImageDraw.Draw(img)
+    color = ['green', 'red', 'blue', 'orange', 'khaki','cyan', 'purple', 'brown', 'gray', 'olive']
+    for z, traj in enumerate(datas['frames']):
+        for t, o in enumerate (traj):
+            if not(t%7):
+                h, w = o.shape[:2]
+                n = np.dstack((o, np.zeros((h,w),dtype=np.uint8)+255))
+                # Make mask of black pixels - mask is True where image is black
+                mBlack = (n[:, :, 0:3] == [0,0,0]).all(2)
+                #print(mBlack)
+                n[mBlack] = (0,0,0,0)
+                im = Image.fromarray(n)    
+                new_width  = 300
+                width, height = im.size
+                new_height = int(new_width * height / width )
+                    
+                im = im.resize((new_width, new_height), Image.ANTIALIAS)
+                width, height = im.size
+                x_pos = datas['traj'][z][t]
+                img.paste(im, (int(6000 + x_pos*6000/23), -400+(10-z)*height),im)
+        w , h = img.size
+        draw = ImageDraw.Draw(img)
+        draw.line([((w-100),(10-z)*(height)-60), (0, (10-z)*(height)-60)], fill=color[z], width = 10)   
+        draw.line([((w-100),(10-z)*(height)-60), (0, (10-z)*(height)-60)], fill=color[z], width = 10) 
+    dir =f"{datas['dir']}/skill_position/{datas['timestep']}"
+    utils.create_directories(dir)
+    img.convert('RGB').save(f"{dir}/skill_pos.pdf")
+    
+
+## Other
+def save_data(data, info):
+    dir = f"{info['dir']}/exploration/state_visited"
+    utils.create_directories(dir)
+    print(dir)
+    np.save(arr=data, file=f"{dir}/states_visited")
+
+def get_color_mapping(use_vqvae, discovery_div_embedding, device, reward_model, discriminator, settings_info):
+    if discovery_div_embedding == 'reward_feature':
+        c, color_mapping = plot_discr_region_pref(device, reward_model, discriminator, settings_info)
     else:
-        return -dist/norm
-
-
-def plot_klsm(ps, device, logger):
-    kl_loss = torch.nn.KLDivLoss(reduction="batchmean")
-    obs = np.array(list(itertools.permutations(np.arange(-255, 255, 2, dtype=float), 2)))/255.0
-    
-    values = [target_reward(o) for o in obs]
-    mean = np.mean(values)
-    ma = np.max(values)
-    mi = np.min(values)
-    t = np.std(values)
-    print(mean, ma, mi, t)
-    values = [(v-mi)/(ma-mi) for v in values]
-    mean = np.mean(values)
-    ma = np.max(values)
-    mi = np.min(values)
-    t = np.std(values)
-    print(mean, ma, mi, t)
-    idxs = np.where(values > np.array([0.55]))[0]
-    idxs_t = torch.from_numpy(idxs).long()
-    obs  = torch.tensor(obs, dtype=torch.float)
-    target_ps = torch.index_select(obs, 0, idxs_t)
-    v = torch.tensor(values, dtype=torch.float)
-    target_mean = torch.mean(torch.index_select(v, 0, idxs_t))
-    print(target_mean)
-    plot_state([target_ps], logger, info='target', step=-1)
-    print(a)
-    indices = list(range(target_ps.size(0)))
-    batch = ps.size(0)
-    mean = 0
-    for i in range(1000):
-        batch_indices = np.random.choice(indices, size=batch)
-        input = ps
-
-        target = target_ps[batch_indices].to(device)
-        mean += kl_loss(input, target).item()
-    return mean/1000.0
-
-def get_targetset(device):
-    return torch.tensor(np.array(list(itertools.permutations(np.arange(100, 255, 2, dtype=float), 2)))/255.0).to(device), np.array([75, 255])/255.0
-
-
-def get_ws_metric(target, obs):
-    indices = list(range(target.size(0)))
-    batch_indices = np.random.choice(indices, size=obs.size(0))
-    return calculate_2_wasserstein_dist(obs, target[batch_indices])
-
-
-def get_kl_metric(input, target):
-    kl_loss = torch.nn.KLDivLoss(reduction="batchmean", log_target=True)
-    return kl_loss(input, target)
-
-def get_metric(obs, target, goal, t):
-    ## get state that match the target state space
-    idxs = obs[(obs[:,0] > goal[0]) & (obs[:,1] > goal[0]) & (obs[:,0] < goal[1]) & (obs[:,1] < goal[1])]
-    allignment_metric =  len(idxs)/t
-    ## get state that match the target state space
-    indices = list(range(target.size(0)))
-    batch_indices = np.random.choice(indices, size=obs.shape[0])
-
-    hs = compute_state_entropy(target[batch_indices], obs, k=15)
-
-    coverage_metric = torch.mean(hs)
-    #coverage_metric_std = torch.var(hs)
-    l = []
-    for i,o in enumerate(obs):
-        h_s = compute_state_entropy(o.unsqueeze(0),torch.cat([obs[0:i,:], obs[i+1:,:]]), k=5)
-        l.append(h_s.detach().cpu().numpy())
-
-    
-    coverage_metric_std = np.mean(l)
-    return allignment_metric, coverage_metric, coverage_metric_std
-
-def get_allignment_metric(obs, goal):
-    
-    p =  0
-    return p #*p
-
-def get_coverage_metric(obs, target):
-    return torch.mean(compute_state_entropy(target, obs, k=2))
-
-def get_coverage_metric2(obs, goal):
-    idxs = obs[(obs[:,0] > goal[0]) & (obs[:,1] > goal[0]) & (obs[:,0] <goal[1]) & (obs[:,1] < goal[1])]
-    p =   len(idxs)/obs.shape[0] + 0.000001
-
-    l = []
-    for i,o in enumerate(obs):
-        h_s = compute_state_entropy(o.unsqueeze(0),torch.cat([obs[0:i,:], obs[i+1:,:]]), k=5)
-        l.append(h_s.detach().cpu().numpy())
-
-    
-    print(np.mean(l),p)
-
-    return 0
-def measure(logger):
-    obs = np.array(list(itertools.permutations(np.arange(-255, 255, 2, dtype=float), 2)))/255.0
-    tobs = torch.tensor(np.array(list(itertools.permutations(np.arange(100, 255, 2, dtype=float), 2)))/255.0)
-    tobs2 = torch.tensor(np.array(list(itertools.permutations(np.arange(100, 150, 2, dtype=float), 2)))/255.0)
-    tobs6 = torch.tensor(np.array(list(itertools.permutations(np.arange(50, 120, 2, dtype=float), 2)))/255.0)
-
-    get_coverage_metric2(tobs, goal=np.array([100, 255])/255.0)
-    get_coverage_metric(tobs, tobs, goal=np.array([100, 255])/255.0)
-
-    get_coverage_metric2(tobs2, goal=np.array([100, 255])/255.0)
-    get_coverage_metric(tobs, tobs2, goal=np.array([100, 255])/255.0)
-
-    get_coverage_metric2(tobs6, goal=np.array([100, 255])/255.0)
-    get_coverage_metric(tobs, tobs6, goal=np.array([100, 255])/255.0)
-
-    print(a)
-    tobs3 = torch.tensor(np.array(list(itertools.permutations(np.arange(200, 250, 2, dtype=float), 2)))/255.0)
-    tobs4 = torch.tensor(np.array(list(itertools.permutations(np.arange(100, 255, 3, dtype=float), 2)))/255.0)
-    tobs5 = torch.tensor(np.array(list(itertools.permutations(np.arange(100, 120, 2, dtype=float), 2)))/255.0)
-    tobs6 = torch.tensor(np.array(list(itertools.permutations(np.arange(50, 120, 2, dtype=float), 2)))/255.0)
-
-
-
-
-
-
-
-    print(tobs6.shape, tobs2.shape)
-    plot_state([tobs2, tobs3], logger, info='target2', step=-1)
-    plot_state([tobs], logger, info='target3', step=-1)
-    plot_state([tobs4], logger, info='target23', step=-1)
-    plot_state([tobs5], logger, info='target237', step=-1)
-    sentropy = compute_state_entropy(tobs, tobs, k=5)
-    sentropy1 = compute_state_entropy(tobs,tobs2, k=5)
-    sentropy2 = compute_state_entropy(tobs, tobs3, k=5)
-    sentropy3 = compute_state_entropy(tobs2, tobs3, k=5)
-    sentropy4 = compute_state_entropy(tobs, tobs4,  k=5)
-    sentropy5 = compute_state_entropy(tobs, tobs5,  k=5)
-    sentropy6 = compute_state_entropy(tobs, tobs6,  k=5)
-    print(torch.mean(sentropy), torch.mean(sentropy1),torch.mean(sentropy2),torch.mean(sentropy3), 
-    torch.mean(sentropy4),torch.mean(sentropy5),torch.mean(sentropy6)) #,torch.mean(sentropy4))
-    
-    t=np.array([100, 255])/255.0
-    tobs5=tobs5.numpy()
-    idxs = tobs5[(tobs5[:,0] > t[0]) & (tobs5[:,1] > t[0]) & (tobs5[:,0] < t[1]) & (tobs5[:,1] < t[1])]#np.where(tobs5[:,0] > t[0] and tobs5[:,1] > t[0] and tobs5[:,0] < t[1] and tobs5[:,1] < t[1])
-    p5 =  1 - len(idxs)/tobs5.shape[0] + 0.000001
-    idxs = tobs6[(tobs6[:,0] > t[0]) & (tobs6[:,1] > t[0]) & (tobs6[:,0] < t[1]) & (tobs6[:,1] < t[1])]
-    p6 =  1 - len(idxs)/tobs6.shape[0] + 0.000001
-    print(torch.mean(sentropy5)*(p5),torch.mean(sentropy6)*(p6)) #,torch.mean(sentropy4))
-    print(a)
-    plot_state([torch.tensor(tobs)], logger, info='target2', step=-1)
-    ##target state
-    values = [target_reward(o) for o in obs]
-    ma = np.max(values)
-    mi = np.min(values)
-    values = [(v-mi)/(ma-mi) for v in values]
-    idxs = np.where(values > np.array([0.5]))[0]
-    idxs_t = torch.from_numpy(idxs).long()
-    target_state = torch.index_select(torch.tensor(obs), 0, idxs_t)
-    ##sample state
-    idxs = np.where(values > np.array([0.7]))[0]
-    idxs_t = torch.from_numpy(idxs).long()
-    p_state = torch.index_select(torch.tensor(obs), 0, idxs_t)
-    idxs = np.where(values > np.array([0.9]))[0]
-    idxs_t = torch.from_numpy(idxs).long()
-    p2_state = torch.index_select(torch.tensor(obs), 0, idxs_t)
-    obs = torch.tensor(obs)
-    indices = list(range(obs.size(0)))       
-    batch_indices = np.random.choice(indices, size=256)
-    samples_state = torch.tensor(obs[batch_indices])
-    plot_state([target_state], logger, info='target', step=-1)
-    plot_state([p_state], logger, info='sample', step=-1)
-
-    sentropy = compute_state_entropy(target_state, target_state, k=5)
-    sentropy1 = compute_state_entropy(target_state, p_state, k=5)
-    sentropy2 = compute_state_entropy(target_state, p2_state, k=5)
-    sentropy3 = compute_state_entropy(samples_state, target_state, k=5)
-    sentropy4 = compute_state_entropy(target_state, samples_state,  k=5)
-    print(torch.mean(sentropy), torch.mean(sentropy1),torch.mean(sentropy2),torch.mean(sentropy3),torch.mean(sentropy4))
-    
-def compute_state_entropy(obs, full_obs, k):
-    batch_size = 500
-    with torch.no_grad():
-        dists = []
-        for idx in range(len(full_obs) // batch_size + 1):
-            start = idx * batch_size
-            end = (idx + 1) * batch_size
-            dist = torch.norm(
-                obs[:, None, :] - full_obs[None, start:end, :], dim=-1, p=2
-            )
-            dists.append(dist)
-
-        dists = torch.cat(dists, dim=1)
-        knn_dists = torch.kthvalue(dists, k=k + 1, dim=1).values
-        state_entropy = knn_dists
-    return state_entropy.unsqueeze(1)
-
-def compute_density(obs, goal):
-    idxs = obs[(obs[:,0] > goal[0]) & (obs[:,1] > goal[0]) & (obs[:,0] <goal[1]) & (obs[:,1] < goal[1])]
-    return 1-len(idxs)/obs.shape[0]
-
-def plot_density(logger, x, y):
-
-
-
-
-    plt.plot(x, y)
-    
-    plt.legend()
-    isExist = os.path.exists(logger.path+'/coverage/')
-    if not isExist:
-            os.makedirs(logger.path+'/coverage/')
-    plt.savefig(logger.path+'/coverage/'+'density.png')
-    plt.clf()
-
-
-
-
-def plot_skill_prior(agent, env, logger, skill_number, training_config, timestep=-1,infop=''):
-    step_max = training_config['step_max']
-    fig, ax = plt.subplots(ncols=1, nrows=1)
-    for i in range (skill_number):
-        ## plot variable
-        X,Y = [], []
-        #Initiate the episode
-        if training_config['prior']:
-            obs, prior = env.reset()
+        if use_vqvae:
+            c, color_mapping = plot_discr_region(device, discriminator, settings_info)
         else:
-            obs = env.reset()
-        done = False
-        episode_step = 0
-        #sample skills
-        z_vector = np.zeros(skill_number)
-        z_vector[i] = 1
-        while not(done):
-            with eval_mode(agent):
-                action = agent.act(np.concatenate([obs, z_vector], axis=-1), sample=True)
-            obs, reward, done, info = env.step(action)
-            done = True if episode_step == step_max -1 else done
-            #done = True if episode_step == step_max else done
-            episode_step +=1
-            if len(info)==1:
-                X.append(info[0])
-                Y.append(i)
-            else:
-                X.append(info[0])
-                Y.append(info[1])
-        ax.plot(X, Y, label=str(i))
-    #loger.plot(label=i, color=colors_list[i])
-    isExist = os.path.exists(logger.path+'/skill'+infop+'/')
-    if not isExist:
-            os.makedirs(logger.path+'/skill'+infop+'/')
-    plt.savefig(logger.path+'/skill'+infop+'/'+str(timestep)+'.png')
-    plt.clf()
-    print('***Plot skill***')
-
-def save_data(logger, data, name):
-    
-    isExist = os.path.exists(logger._log_dir+'/data/')
-    if not isExist:
-            os.makedirs(logger._log_dir+'/data/')
-    np.save(logger._log_dir+'/data/'+name, data)
-
+            color_mapping = None
+            c=None
+    return color_mapping, c

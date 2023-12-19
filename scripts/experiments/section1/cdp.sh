@@ -1,4 +1,3 @@
-
-
-
-python main.py -method oracle_cdp -dir experiments/section1/ -config nav2d/oracle/cdp.yaml -file_name cdp -seed 34512 -train True
+for seed in 12345; do #23451 34512 45123 51234 67890 78906 89067 90678 6789
+    python train_cdp.py cfg='extension/exp1/cdp' cfg.seed=$seed
+done

@@ -1,16 +1,8 @@
-import math
 from re import S
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.utils.data as data
-import torch.optim as optim
-import itertools
-import tqdm
-import copy
-import scipy.stats as st
-import os
 import time
 
 from scipy.stats import norm
@@ -18,11 +10,18 @@ from scipy.stats import norm
 PEBBLE implementation adapted from from https://github.com/rll-research/BPref
 '''
 
-def gen_net(in_size=1, out_size=1, H=[256,256], n_layers=3, activation='tanh'):
+
+def gen_net(in_size=1, out_size=1, H=[256,256], n_layers=3, activation='tanh', last_activation='lrelu'):
     net = []
     for i in range(n_layers):
         net.append(nn.Linear(in_size, H[i]))
-        net.append(nn.LeakyReLU())
+        if i == (n_layers -1):
+            if last_activation == 'tanh':
+                net.append(nn.Tanh())
+            if last_activation == 'lrelu':
+                net.append(nn.LeakyReLU())
+        else:
+            net.append(nn.LeakyReLU())
         in_size = H[i]
     net.append(nn.Linear(in_size, out_size))
     if activation == 'tanh':
@@ -89,9 +88,24 @@ class RewardModel:
                  ensemble_size, lr, 
                  mb_size, size_segment, sampling_mode, hidden_size=256, num_layers=3,
                  env_maker=None, max_size=100, device=None, activation='tanh', capacity=5e5,  
-                 large_batch=10, label_margin=0.0, reward_mode='uni', pref_mode='random'):
+                 large_batch=10, label_margin=0.0, reward_mode='uni', pref_mode='random',
+                 teacher_beta=-1, teacher_gamma=1, 
+                 teacher_eps_mistake=0, 
+                 teacher_eps_skip=0, 
+                 teacher_eps_equal=0,
+                 last_activation='lrelu',
+                 last_size=256
+                 ):
         
-        # train data is trajectories, must process to sa and s..   
+        # train data is trajectories, must process to sa and s..  
+        # ##Define Teacher params 
+        self.teacher_beta=teacher_beta
+        self.teacher_gamma=teacher_gamma 
+        self.teacher_eps_mistake= teacher_eps_mistake
+        self.teacher_eps_skip=teacher_eps_skip
+        self.teacher_eps_equal=teacher_eps_equal
+
+        
         self.device = device
         self.ds = ds
         self.de = ensemble_size
@@ -114,8 +128,10 @@ class RewardModel:
         self.reward_mode = reward_mode   
 
 
-        self.hidden_size = hidden_size
+        self.hidden_size = [hidden_size for i in range(num_layers-1)]
+        self.hidden_size.append(last_size)
         self.num_layers = num_layers    
+        self.last_activation = last_activation
         self.construct_ensemble()
         self.inputs = []
         self.targets = []
@@ -157,7 +173,7 @@ class RewardModel:
         for i in range(self.de):
             model = nn.Sequential(*gen_net(in_size=self.ds, 
                                            out_size=1, H=self.hidden_size, n_layers=self.num_layers, 
-                                           activation=self.activation)).float().to(self.device)
+                                           activation=self.activation, last_activation=self.last_activation)).float().to(self.device)
             self.ensemble.append(model)
             self.paramlst.extend(model.parameters())
             
@@ -209,12 +225,25 @@ class RewardModel:
         return np.mean(probs, axis=0), np.std(probs, axis=0)
     
 
-
-    def r_hat_member(self, x, member=-1):
+    def p_hat_member(self, x_1, x_2, member=-1):
+        # softmaxing to get the probabilities according to eqn 1
+        with torch.no_grad():
+            r_hat1 = self.r_hat_member(x_1, member=member)
+            r_hat2 = self.r_hat_member(x_2, member=member)
+            r_hat1 = r_hat1.sum(axis=1)
+            r_hat2 = r_hat2.sum(axis=1)
+            r_hat = torch.cat([r_hat1, r_hat2], axis=-1)
+        
+        # taking 0 index for probability x_1 > x_2
+        return F.softmax(r_hat, dim=-1)[:,0]
+    
+    def r_hat_member(self, x, member=-1, tensor=False):
         # the network parameterizes r hat in eqn 1 from the paper
-        return self.ensemble[member](torch.from_numpy(x).float().to(self.device))
+        if tensor:
 
-
+            return self.ensemble[member](x)
+        else:
+            return self.ensemble[member](torch.from_numpy(x).float().to(self.device))
 
     def r_hat(self, x):
         # they say they average the rewards from each member of the ensemble, but I think this only makes sense if the rewards are already normalized
@@ -224,21 +253,30 @@ class RewardModel:
             r_hats.append(self.r_hat_member(x, member=member).detach().cpu().numpy())
         r_hats = np.array(r_hats)
         return np.mean(r_hats)
+    
 
-
-    def r_hat_batch(self, x):
+    def r_hat_batch(self, x, tensor=False):
         # they say they average the rewards from each member of the ensemble, but I think this only makes sense if the rewards are already normalized
         # but I don't understand how the normalization should be happening right now :(
         r_hats = []
-        for member in range(self.de):
-            r_hats.append(self.r_hat_member(x, member=member).detach().cpu().numpy())
-        r_hats = np.array(r_hats)
+        if tensor:
+            for member in range(self.de):
+                r_hats.append(self.r_hat_member(x, member=member, tensor=tensor))
+            r_hats = torch.stack(r_hats)
+            return torch.mean(r_hats, dim=0)
+        else:
+            for member in range(self.de):
+                r_hats.append(self.r_hat_member(x, member=member, tensor=tensor).detach().cpu().numpy())
+            r_hats = np.array(r_hats)
 
-        return np.mean(r_hats, axis=0)
+            return np.mean(r_hats, axis=0)
 
-    def f_hat_member(self, x, member=-1):
+    def f_hat_member(self, x, member=-1,tensor=False):
         # the network parameterizes r hat in eqn 1 from the paper
-        return self.ensemble[member][:-3](torch.from_numpy(x).float().to(self.device))
+        if tensor:
+            return self.ensemble[member][:-3](x)
+        else:
+            return self.ensemble[member][:-3](torch.from_numpy(x).float().to(self.device))
 
     def f_hat(self, x):
         # they say they average the rewards from each member of the ensemble, but I think this only makes sense if the rewards are already normalized
@@ -249,15 +287,43 @@ class RewardModel:
         r_hats = np.array(r_hats)
         return np.mean(r_hats, axis=0)  
 
-    def f_hat_batch(self, x):
+    def f_hat_batch(self, x, tensor=False):
         # they say they average the rewards from each member of the ensemble, but I think this only makes sense if the rewards are already normalized
         # but I don't understand how the normalization should be happening right now :(
         r_hats = []
-        for member in range(self.de):
-            r_hats.append(self.f_hat_member(x, member=member).detach().cpu().numpy())
-        r_hats = np.array(r_hats)
+        if tensor:
+            for member in range(self.de):
+                r_hats.append(self.f_hat_member(x, member=member, tensor=tensor))
+            r_hats = torch.stack(r_hats)
+            return torch.mean(r_hats, dim=0)
+        else:
+            for member in range(self.de):
+                r_hats.append(self.f_hat_member(x, member=member).detach().cpu().numpy())
+            r_hats = np.array(r_hats)
 
         return np.mean(r_hats, axis=0)
+    
+    def get_entropy(self, x_1, x_2):
+        # get probability x_1 > x_2
+        probs = []
+        for member in range(self.de):
+            probs.append(self.p_hat_entropy(x_1, x_2, member=member).cpu().numpy())
+        probs = np.array(probs)
+        return np.mean(probs, axis=0), np.std(probs, axis=0)    
+    
+    def p_hat_entropy(self, x_1, x_2, member=-1):
+        # softmaxing to get the probabilities according to eqn 1
+        with torch.no_grad():
+            r_hat1 = self.r_hat_member(x_1, member=member)
+            r_hat2 = self.r_hat_member(x_2, member=member)
+            r_hat1 = r_hat1.sum(axis=1)
+            r_hat2 = r_hat2.sum(axis=1)
+            r_hat = torch.cat([r_hat1, r_hat2], axis=-1)
+        
+        ent = F.softmax(r_hat, dim=-1) * F.log_softmax(r_hat, dim=-1)
+        ent = ent.sum(axis=-1).abs()
+        return ent   
+    
     def save(self, model_dir, step):
         for member in range(self.de):
             torch.save(
@@ -267,7 +333,7 @@ class RewardModel:
     def load(self, model_dir, step):
         for member in range(self.de):
             self.ensemble[member].load_state_dict(
-                torch.load('%s/reward_model_%s_%s.pt' % (model_dir, step, member))
+                torch.load('%s/reward_model_%s_%s.pt' % (model_dir, step, member), map_location=torch.device('cpu'))
             )
     
     def get_train_acc(self):
@@ -321,6 +387,7 @@ class RewardModel:
         batch_index_1 = np.random.choice(max_len, size=mb_size, replace=True)
         sa_t_1 = train_inputs[batch_index_1] # Batch x T x dim of s&a
         r_t_1 = train_targets[batch_index_1] # Batch x T x 1
+        
         sa_t_1 = sa_t_1.reshape(-1, sa_t_1.shape[-1]) # (Batch x T) x dim of s&a
         r_t_1 = r_t_1.reshape(-1, r_t_1.shape[-1]) # (Batch x T) x 1
         sa_t_2 = sa_t_2.reshape(-1, sa_t_2.shape[-1]) # (Batch x T) x dim of s&a
@@ -361,6 +428,70 @@ class RewardModel:
             np.copyto(self.buffer_label[self.buffer_index:next_index], labels)
             self.buffer_index = next_index
             
+    def get_labelt(self, sa_t_1, sa_t_2, r_t_1, r_t_2):
+        r_t_1 = r_t_1/self.size_segment
+        r_t_2 = r_t_2/self.size_segment
+        sum_r_t_1 = np.sum(r_t_1, axis=1)
+        sum_r_t_2 = np.sum(r_t_2, axis=1)
+        
+        # skip the query
+        if self.teacher_eps_skip > 0: 
+            max_r_t = np.maximum(sum_r_t_1, sum_r_t_2)
+            max_index = (max_r_t > self.teacher_eps_skip).reshape(-1)
+            print(max_r_t)
+       
+            if sum(max_index) == 0:
+                return None, None, None, None, []
+            
+            sa_t_1 = sa_t_1[max_index]
+            sa_t_2 = sa_t_2[max_index]
+            r_t_1 = r_t_1[max_index]
+            r_t_2 = r_t_2[max_index]
+            sum_r_t_1 = np.sum(r_t_1, axis=1)
+            sum_r_t_2 = np.sum(r_t_2, axis=1)
+
+
+        # equally preferable
+        margin_index = (np.abs(sum_r_t_1 - sum_r_t_2) < self.teacher_eps_equal).reshape(-1)
+
+
+        # perfectly rational
+        seg_size = r_t_1.shape[1]
+        temp_r_t_1 = r_t_1.copy()
+        temp_r_t_2 = r_t_2.copy()
+        for index in range(seg_size-1):
+            temp_r_t_1[:,:index+1] *= self.teacher_gamma
+            temp_r_t_2[:,:index+1] *= self.teacher_gamma
+        sum_r_t_1 = np.sum(temp_r_t_1, axis=1)
+        sum_r_t_2 = np.sum(temp_r_t_2, axis=1)
+            
+        rational_labels = 1*(sum_r_t_1 < sum_r_t_2)
+        if self.teacher_beta > 0: # Bradley-Terry rational model
+            r_hat = torch.cat([torch.Tensor(sum_r_t_1), 
+                               torch.Tensor(sum_r_t_2)], axis=-1)
+            r_hat = r_hat*self.teacher_beta
+            ent = F.softmax(r_hat, dim=-1)[:, 1]
+            labels = torch.bernoulli(ent).int().numpy().reshape(-1, 1)
+        else:
+            labels = rational_labels
+        
+        # making a mistake
+        len_labels = labels.shape[0]
+        rand_num = np.random.rand(len_labels)
+        noise_index = rand_num <= self.teacher_eps_mistake
+        labels[noise_index] = 1 - labels[noise_index]
+ 
+        # equally preferable
+        labels[margin_index] = -1 
+
+        #if self.reward_mode == 'multi':
+        #    r_index = np.random.randint(low=0, high=2, size=self.mb_size, dtype=int)
+        #    rational_labels = np.array([[rl[ri]] for rl,ri in zip(rational_labels, r_index)]) # Batch x size_seg x dim of s&a
+
+        #labels = rational_labels
+        
+        return sa_t_1, sa_t_2, r_t_1, r_t_2, labels
+    
     def get_label(self, sa_t_1, sa_t_2, r_t_1, r_t_2):
         sum_r_t_1 = np.sum(r_t_1, axis=1)
         sum_r_t_2 = np.sum(r_t_2, axis=1)
@@ -375,14 +506,9 @@ class RewardModel:
             
         rational_labels = 1*(sum_r_t_1 < sum_r_t_2)
 
-        if self.reward_mode == 'multi':
-            r_index = np.random.randint(low=0, high=2, size=self.mb_size, dtype=int)
-            rational_labels = np.array([[rl[ri]] for rl,ri in zip(rational_labels, r_index)]) # Batch x size_seg x dim of s&a
-
         labels = rational_labels
         
         return sa_t_1, sa_t_2, r_t_1, r_t_2, labels
-    
 
     def uniform_sampling(self):
         # get queries
@@ -390,7 +516,7 @@ class RewardModel:
             mb_size=self.mb_size)
             
         # get labels
-        sa_t_1, sa_t_2, r_t_1, r_t_2, labels = self.get_label(
+        sa_t_1, sa_t_2, r_t_1, r_t_2, labels = self.get_labelt(
             sa_t_1, sa_t_2, r_t_1, r_t_2)
         
         if len(labels) > 0:
@@ -398,12 +524,58 @@ class RewardModel:
         
         return len(labels)
     
+    def entropy_sampling(self):
+        
+        # get queries
+        sa_t_1, sa_t_2, r_t_1, r_t_2 =  self.get_queries(
+            mb_size=self.mb_size*self.large_batch)
+        
+        # get final queries based on uncertainty
+        entropy, _ = self.get_entropy(sa_t_1, sa_t_2)
+        
+        top_k_index = (-entropy).argsort()[:self.mb_size]
+        r_t_1, sa_t_1 = r_t_1[top_k_index], sa_t_1[top_k_index]
+        r_t_2, sa_t_2 = r_t_2[top_k_index], sa_t_2[top_k_index]
+        
+        # get labels
+        sa_t_1, sa_t_2, r_t_1, r_t_2, labels = self.get_label(    
+            sa_t_1, sa_t_2, r_t_1, r_t_2)
+        
+        if len(labels) > 0:
+            self.put_queries(sa_t_1, sa_t_2, labels)
+        
+        return len(labels)
 
+    def disagreement_sampling(self):
+        
+        # get queries
+        sa_t_1, sa_t_2, r_t_1, r_t_2 =  self.get_queries(
+            mb_size=self.mb_size*self.large_batch)
+        
+        # get final queries based on uncertainty
+        _, disagree = self.get_rank_probability(sa_t_1, sa_t_2)
+        top_k_index = (-disagree).argsort()[:self.mb_size]
+        r_t_1, sa_t_1 = r_t_1[top_k_index], sa_t_1[top_k_index]
+        r_t_2, sa_t_2 = r_t_2[top_k_index], sa_t_2[top_k_index]        
+        
+        # get labels
+        sa_t_1, sa_t_2, r_t_1, r_t_2, labels = self.get_label(
+            sa_t_1, sa_t_2, r_t_1, r_t_2)        
+        if len(labels) > 0:
+            self.put_queries(sa_t_1, sa_t_2, labels)
+        
+        return len(labels)  
+      
     def sampling(self):
         if self.sampling_mode == 'uniform':
             return self.uniform_sampling()
+        if self.sampling_mode == 'entropy':
+            return self.entropy_sampling()
+        if self.sampling_mode == 'disagreement':
+            return self.disagreement_sampling()
+        
 
-    def train_reward(self, logger, timestep):
+    def train_reward(self):
         ensemble_losses = [[] for _ in range(self.de)]
         ensemble_acc = np.array([0 for _ in range(self.de)])
         
@@ -415,7 +587,7 @@ class RewardModel:
         num_epochs = int(np.ceil(max_len/self.train_batch_size))
         list_debug_loss1, list_debug_loss2 = [], []
         total = 0
-        
+        total_loss = []
         for epoch in range(num_epochs):
             self.opt.zero_grad()
             loss = 0.0
@@ -445,6 +617,8 @@ class RewardModel:
 
                 # compute loss
                 curr_loss = self.CEloss(r_hat, labels)
+                
+              
                 loss += curr_loss
                 ensemble_losses[member].append(curr_loss.item())
                 
@@ -456,6 +630,69 @@ class RewardModel:
             loss.backward()
             self.opt.step()
             self.loss = loss.detach().cpu().numpy()
+            total_loss.append(self.loss)
         ensemble_acc = ensemble_acc / total
-        return ensemble_acc
+        return ensemble_acc, total_loss
     
+    def train_soft_reward(self):
+        ensemble_losses = [[] for _ in range(self.de)]
+        ensemble_acc = np.array([0 for _ in range(self.de)])
+        
+        max_len = self.capacity if self.buffer_full else self.buffer_index
+        total_batch_index = []
+        for _ in range(self.de):
+            total_batch_index.append(np.random.permutation(max_len))
+        
+        num_epochs = int(np.ceil(max_len/self.train_batch_size))
+        list_debug_loss1, list_debug_loss2 = [], []
+        total = 0
+        total_loss = []
+        for epoch in range(num_epochs):
+            self.opt.zero_grad()
+            loss = 0.0
+            
+            last_index = (epoch+1)*self.train_batch_size
+            if last_index > max_len:
+                last_index = max_len
+                
+            for member in range(self.de):
+                
+                # get random batch
+                idxs = total_batch_index[member][epoch*self.train_batch_size:last_index]
+                sa_t_1 = self.buffer_seg1[idxs]
+                sa_t_2 = self.buffer_seg2[idxs]
+                labels = self.buffer_label[idxs]
+                labels = torch.from_numpy(labels.flatten()).long().to(self.device)
+                
+                if member == 0:
+                    total += labels.size(0)
+                
+                # get logits
+                r_hat1 = self.r_hat_member(sa_t_1, member=member)
+                r_hat2 = self.r_hat_member(sa_t_2, member=member)
+                r_hat1 = r_hat1.sum(axis=1)
+                r_hat2 = r_hat2.sum(axis=1)
+                r_hat = torch.cat([r_hat1, r_hat2], axis=-1)
+
+                # compute loss
+                uniform_index = labels == -1
+                labels[uniform_index] = 0
+                target_onehot = torch.zeros_like(r_hat).scatter(1, labels.unsqueeze(1), self.label_target)
+                target_onehot += self.label_margin
+                if sum(uniform_index) > 0:
+                    target_onehot[uniform_index] = 0.5
+                curr_loss = self.softXEnt_loss(r_hat, target_onehot)
+                loss += curr_loss
+                ensemble_losses[member].append(curr_loss.item())
+                
+                # compute acc
+                _, predicted = torch.max(r_hat.data, 1)
+                correct = (predicted == labels).sum().item()
+                ensemble_acc[member] += correct
+                
+            loss.backward()
+            self.opt.step()
+            self.loss = loss.detach().cpu().numpy()
+            total_loss.append(self.loss)
+        ensemble_acc = ensemble_acc / total
+        return ensemble_acc, total_loss

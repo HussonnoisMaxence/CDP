@@ -1,7 +1,5 @@
-from builtins import max, object, print, zip
 import numpy as np
 import torch
-import utils
 '''
 Replay-buffer adapted from from https://github.com/rll-research/BPref
 '''
@@ -90,7 +88,9 @@ class ReplayBuffer(object):
             
             pred_reward = predictor.r_hat_batch(inputs)
             self.rewards[index*batch_size:last_index] = pred_reward
-            
+
+
+
     def sample(self, batch_size):
         idxs = np.random.randint(0,
                                  self.capacity if self.full else self.idx,
@@ -157,8 +157,6 @@ class ReplayBuffer(object):
         self.idx = 0
         self.last_save = 0
         self.full = False
-
-
 
 
 class ReplayBufferZ(object):
@@ -242,22 +240,34 @@ class ReplayBufferZ(object):
             if (index+1)*batch_size > self.idx:
                 last_index = self.idx
             inputs = self.prefs[index*batch_size:last_index]
-            pred_reward = np.sum([p.r_hat_batch(inputs) for p in predictor])
+            with torch.no_grad():
+                self.rewards[index*batch_size:last_index] = predictor.r_hat_batch(inputs)
 
-            self.rewards[index*batch_size:last_index] = pred_reward
-
-
-    def get_full_prefs(self, batch):
-        idxs = np.random.randint(0,
-                                 self.capacity if self.full else self.idx,
-                                 size=batch)
+    def relabel_pref_with_predictor(self, predictor):
+        batch_size = 200
+        total_iter = int(self.idx/batch_size)
+        
+        if self.idx > batch_size*total_iter:
+            total_iter += 1
+            
+        for index in range(total_iter):
+            last_index = (index+1)*batch_size
+            if (index+1)*batch_size > self.idx:
+                last_index = self.idx
+            inputs = self.prefs[index*batch_size:last_index]
+            with torch.no_grad():
+                self.divs[index*batch_size:last_index] = predictor.f_hat_batch(inputs)    
+                 
+    def get_full_prefs(self, batch, tensor=True):
         if self.full:
             full_prefs = self.prefs
-
         else:
             full_prefs = self.prefs[: self.idx]
 
-        full_prefs = torch.as_tensor(full_prefs, device=self.device)
+        if tensor:
+            full_prefs = torch.as_tensor(full_prefs, device=self.device)
+            return full_prefs
+        
         return full_prefs
 
 
@@ -273,6 +283,3 @@ class ReplayBufferZ(object):
 
         full_divs = torch.as_tensor(full_divs, device=self.device)
         return full_divs
-
-
-

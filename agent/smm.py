@@ -2,35 +2,37 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import math
-
-
+import time
 
 from agent.critic import DoubleQCritic
 from agent.actor import DiagGaussianActor
-from agent.sac import compute_state_entropy
-from utils.networks import mlp,  weight_init, TorchRunningMeanStd, to_np, soft_update_params
+from utils.networks import  weight_init, to_np, soft_update_params
+'''
+SMM implementation adapted from from https://github.com/rll-research/BPref
+'''
 
 class VAE(nn.Module):
-    def __init__(self, obs_dim, z_dim, code_dim, vae_beta, device):
+    def __init__(self, obs_dim, z_dim, hidden_dim, code_dim, vae_beta, device):
         super().__init__()
         self.z_dim = z_dim
         self.code_dim = code_dim
 
-        self.make_networks(obs_dim, z_dim, code_dim)
+        self.make_networks(obs_dim, z_dim, hidden_dim, code_dim)
         self.beta = vae_beta
 
         self.apply(weight_init)
         self.device = device
 
-    def make_networks(self, obs_dim, z_dim, code_dim):
-        self.enc = nn.Sequential(nn.Linear(obs_dim + z_dim, 150), nn.ReLU(),
-                                 nn.Linear(150, 150), nn.ReLU())
-        self.enc_mu = nn.Linear(150, code_dim)
-        self.enc_logvar = nn.Linear(150, code_dim)
-        self.dec = nn.Sequential(nn.Linear(code_dim, 150), nn.ReLU(),
-                                 nn.Linear(150, 150), nn.ReLU(),
-                                 nn.Linear(150, obs_dim + z_dim))
+    def make_networks(self, obs_dim, z_dim,hidden_dim,  code_dim):
+        self.enc = nn.Sequential(nn.Linear(obs_dim + z_dim, hidden_dim), nn.ReLU(),
+                                 nn.Linear(hidden_dim, hidden_dim), nn.ReLU())
+        self.enc_mu = nn.Linear(hidden_dim, code_dim)
+
+        self.enc_logvar = nn.Linear(hidden_dim, code_dim)
+
+        self.dec = nn.Sequential(nn.Linear(code_dim, hidden_dim), nn.ReLU(),
+                                 nn.Linear(hidden_dim, hidden_dim), nn.ReLU(),
+                                 nn.Linear(hidden_dim, obs_dim + z_dim))
 
     def encode(self, obs_z):
         enc_features = self.enc(obs_z)
@@ -57,7 +59,7 @@ class VAE(nn.Module):
             log_prob.shape[0], 1)
 
 class SMM(nn.Module):
-    def __init__(self, obs_dim, z_dim, hidden_dim, vae_beta, device):
+    def __init__(self, obs_dim, z_dim, hidden_dim, code_dim,  vae_beta, device):
         super().__init__()
         self.z_dim = z_dim
         self.z_pred_net = nn.Sequential(nn.Linear(obs_dim, hidden_dim),
@@ -65,11 +67,15 @@ class SMM(nn.Module):
                                         nn.Linear(hidden_dim, hidden_dim),
                                         nn.ReLU(),
                                         nn.Linear(hidden_dim, z_dim))
+        
+
         self.vae = VAE(obs_dim=obs_dim,
                        z_dim=z_dim,
-                       code_dim=128,
+                       hidden_dim=hidden_dim,
+                       code_dim=code_dim,
                        vae_beta=vae_beta,
                        device=device)
+        
         self.apply(weight_init)
 
     def predict_logits(self, obs):
@@ -104,11 +110,13 @@ class SMMAgent():
                 learnable_temperature,
                 skill_dim,
                 hidden_dim_smm,
+                code_dim_smm,
                 vae_beta,
                 sp_lr,
                 vae_lr,
                 prior_dim=None,
-                scale_factors=[1,1,1]
+                scale_factors=[1,1,1],
+                beta_smm=0.5,
 ):
         super().__init__()
         self.obs_dim = obs_dim
@@ -117,10 +125,7 @@ class SMMAgent():
         self.action_dim = action_dim
         self.hidden_dim = hidden_dim
         self.hidden_depth = hidden_depth
-        self.exploration=True
-        self.ps_scale = scale_factors[0]
-        self.exp_scale = scale_factors[1]
-        self.div_scale = scale_factors[2]
+        self.scale_factors = scale_factors
         self.action_range = action_range
         self.log_std_bounds=log_std_bounds
         self.device = torch.device(device)
@@ -133,7 +138,6 @@ class SMMAgent():
         self.critic_lr = critic_lr
         self.init_temperature = init_temperature
         self.alpha_lr = alpha_lr
-        self.s_ent_stats = TorchRunningMeanStd(shape=[1], device=device)
         #Initiate Critics
         self.critic = DoubleQCritic(obs_dim+self.skill_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
         self.critic_target = DoubleQCritic(obs_dim+self.skill_dim, action_dim, hidden_dim, hidden_depth).to(self.device)
@@ -145,22 +149,24 @@ class SMMAgent():
 
         self.smm_dim = self.prior_dim
         ## Initiate the SMM
-        self.hidden_dim_smm = hidden_dim_smm
         self.sp_lr = sp_lr
-        self.vae_lr=vae_lr
-        self.vae_beta= vae_beta
+        self.vae_lr = vae_lr
+        self.vae_beta = vae_beta
+        self.hidden_dim_smm=hidden_dim_smm
+        self.beta_smm = beta_smm
         self.smm = SMM(
                     self.smm_dim,
                     skill_dim,
+                    code_dim=code_dim_smm,
                     hidden_dim=hidden_dim_smm,
                     vae_beta=vae_beta,
                     device=device).to(device)
-        self.pred_optimizer = torch.optim.Adam(
-            self.smm.z_pred_net.parameters(), lr=sp_lr)
-        self.vae_optimizer = torch.optim.Adam(self.smm.vae.parameters(),
-                                              lr=vae_lr)
-        self.latent_cond_ent_coef = ...#latent_cond_ent_coef
+        
+        self.pred_optimizer = torch.optim.Adam( self.smm.z_pred_net.parameters(), lr=sp_lr)
+        self.vae_optimizer = torch.optim.Adam(self.smm.vae.parameters(), lr=vae_lr)
+       
         self.train_freq = train_freq
+
         #Alpha
         self.log_alpha = torch.tensor(np.log(init_temperature)).to(self.device)
         self.log_alpha.requires_grad = True
@@ -181,17 +187,12 @@ class SMMAgent():
         # change mode
         self.train()
         self.critic_target.train()
-
         self.smm.train()
 
         # fine tuning SMM agent
         self.ft_returns = np.zeros(skill_dim, dtype=np.float32)
         self.ft_not_finished = [True for z in range(skill_dim)]
 
-        self.min_pref = None
-        self.max_pref = None
-        self.commit = None
-        self.pref_distrib = None
         
     def train(self, training=True):
         self.training = training
@@ -249,6 +250,7 @@ class SMMAgent():
         self.critic_target.load_state_dict(
             torch.load('%s/critic_target_%s.pt' % (model_dir, step))
         )
+    
     @property
     def alpha(self):
         return self.log_alpha.exp()
@@ -264,16 +266,18 @@ class SMMAgent():
 
 
     def update_critic(self, obs, action, reward, next_obs, 
-                      not_done, logger, timestep, print_flag=True):
+                      not_done, metrics, prefix):
         
-        dist = self.actor(next_obs)
-        next_action = dist.rsample()
-        log_prob = dist.log_prob(next_action).sum(-1, keepdim=True)
-        target_Q1, target_Q2 = self.critic_target(next_obs, next_action)
-        target_V = torch.min(target_Q1,
-                             target_Q2) - self.alpha.detach() * log_prob
-        target_Q = reward + (not_done * self.discount * target_V)
-        target_Q = target_Q.detach()
+        with torch.no_grad():
+            dist = self.actor(next_obs)
+            next_action = dist.rsample()
+
+            log_prob = dist.log_prob(next_action).sum(-1, keepdim=True)
+            target_Q1, target_Q2 = self.critic_target(next_obs, next_action)
+            target_V = torch.min(target_Q1,
+                                target_Q2) - self.alpha * log_prob
+            target_Q = reward + (not_done * self.discount * target_V)
+            target_Q = target_Q
 
         # get current Q estimates
         current_Q1, current_Q2 = self.critic(obs, action)
@@ -285,17 +289,16 @@ class SMMAgent():
         # Optimize the critic
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
+        torch.nn.utils.clip_grad_value_(self.critic.parameters(), 100)
         self.critic_optimizer.step()
-
-        logger.log('smm/critic_loss', critic_loss, timestep)
-
+        metrics.update({f"{prefix}/critic_loss": critic_loss})
+        return metrics                    
     
-    def update_actor_and_alpha(self, obs, logger, timestep, print_flag=False):
+    def update_actor_and_alpha(self, obs, metrics, prefix):
         dist = self.actor(obs)
         action = dist.rsample()
         log_prob = dist.log_prob(action).sum(-1, keepdim=True)
         actor_Q1, actor_Q2 = self.critic(obs, action)
-
         actor_Q = torch.min(actor_Q1, actor_Q2)
         actor_loss = (self.alpha.detach() * log_prob - actor_Q).mean()
 
@@ -313,148 +316,231 @@ class SMMAgent():
             alpha_loss.backward()
             self.log_alpha_optimizer.step()
 
-        logger.log('smm/actor_loss', actor_loss, timestep)
+            metrics.update({f"{prefix}/alpha_loss": alpha_loss })
 
-
-    def update_vae(self, obs_z):
-        metrics = dict()
+        metrics.update({
+            f"{prefix}/actor_loss": actor_loss , 
+            f"{prefix}/alpha":self.alpha, 
+        })
+        return metrics
+    
+    def update_vae(self, obs_z, metrics, prefix):
         loss, h_s_z = self.smm.vae.loss(obs_z)
         self.vae_optimizer.zero_grad()
-
         loss.backward()
         self.vae_optimizer.step()
+        metrics.update({f"{prefix}/loss_vae":loss})
+        return metrics, h_s_z.detach()
 
-
-        #metrics['loss_vae'] = loss.cpu().item()
-
-        return metrics, h_s_z
-
-    def update_pred(self, obs, z):
-        metrics = dict()
+    def update_pred(self, obs, z, metrics, prefix):
         logits = self.smm.predict_logits(obs)
         h_z_s = self.smm.loss(logits, z).unsqueeze(-1)
         loss = h_z_s.mean()
         self.pred_optimizer.zero_grad()
         loss.backward()
         self.pred_optimizer.step()
+        metrics.update({f"{prefix}/loss_predict":loss})
 
-        #metrics['loss_pred'] = loss.cpu().item()
+        return metrics, h_z_s.detach()
+    
 
-        return metrics, h_z_s
-    def norm_reward(self, values):
-        ma = torch.max(values)
-        mi =  torch.min(values)
-        return torch.tensor([(v-mi)/(ma-mi) for v in values])
 
-    def update(self, replay_buffer, logger, timestep, target_reward=False, vqvae=None, mi='reverse', gradient_update=1):
+    def update(self, timestep, replay_buffer, info, vqvae=None, gradient_update=1):
+        metrics_update = {}
+        start_time_init0 = time.time()
+        
         if timestep % self.train_freq == 0:
             for index in range(gradient_update):
+                start_time_init = time.time()
                 batch = replay_buffer.sample(self.batch_size)
-                obs_z = torch.cat([batch['obs'],batch['skill']], dim=1)
-                next_obs_z = torch.cat([batch['next_obs'],batch['skill']], dim=1)
-
-               
-                h_z = np.log(self.skill_dim)  # One-hot z encoding            
-                h_z *= torch.ones_like(batch['reward']).to(self.device)
-
-                next_obs = batch['divs']
+                obs_z = torch.cat([batch['obs'], batch['skill']], dim=1)
+                next_obs_z = torch.cat([batch['next_obs'], batch['skill']], dim=1)
+                
                 obs_z_vae =  torch.cat([batch['divs'], batch['skill']], dim=1)
+                next_obs = batch['divs']
 
-                _, h_s_z = self.update_vae(obs_z_vae)
+                start_time_init = time.time()
+                metrics_update, h_s_z = self.update_vae(obs_z_vae, metrics_update, prefix=info['prefix'])
+               
+                #SMM BASIC
+                if info['objective']=='smm': #SMM BASIC
+                    #compute reward exploration
+                    scaling =  2
+                    #h_s_z = norm(x=h_s_z, min=-0.75, max=4)
+                    reward_exploration = h_s_z
 
-                h_s_z = h_s_z.detach()
+                    #compute reward diversity
+                    h_z = np.log(self.skill_dim)  # One-hot z encoding            
+                    h_z *= torch.ones_like(batch['reward']).to(self.device)
+                    metrics_update, h_z_s = self.update_pred(next_obs, batch['skill'], metrics_update, prefix=info['prefix'])
+                    
+                    reward_diversity = h_z + h_z_s
+                    #reward_diversity = norm(x=reward_diversity, min=2, max=6)
+                    reward = reward_diversity +reward_exploration
+                    reward = reward/scaling
 
-                if vqvae==None:
-                    _, h_z_s = self.update_pred(next_obs, batch['skill'])
-                    reward =  h_s_z + h_z_s.detach() + h_z
-                    if target_reward:
-                        reward = reward + batch['reward']
+                if info['objective']=='smm_prior': #SMM BASIC
+                    #compute reward exploration
+                    scaling =  sum(self.scale_factors)
+                    reward_exploration = self.scale_factors[0]*h_s_z + self.scale_factors[2]*batch['reward']
 
-                elif vqvae != None:   
+                    #compute reward diversity
+                    h_z = np.log(self.skill_dim)  # One-hot z encoding            
+                    h_z *= torch.ones_like(batch['reward']).to(self.device)
+
+                    metrics_update, h_z_s = self.update_pred(next_obs, batch['skill'], metrics_update, info['prefix'])
+
+                    reward_diversity = h_z + h_z_s
+                    
+                    reward = self.scale_factors[1]*reward_diversity + reward_exploration           
+                    reward = reward/scaling    
+                    
+
+                    metrics_update.update({
+                        f"{info['prefix']}/reward_pref": batch['reward'].mean(),
+                    })
+
+                if info['objective']=='cdp': 
+                    #compute reward exploration
+                    scaling = sum(self.scale_factors)
+                    #h_s_z = norm(x=h_s_z, min=-0.75, max=4)
+                    reward_exploration = self.scale_factors[0]*h_s_z
+                    if info['use_reward']:
+                        reward_exploration = reward_exploration + self.scale_factors[2]*batch['reward']
+
+                    #compute reward diversity
                     z_hat = torch.argmax(batch['skill'], dim=1)
-
-                    if mi=='forward':
-                        h_z_s = vqvae.log_approx_posterior(dict(
-                                            next_state=next_obs,
-                                            skill=z_hat)).view(-1,1).detach()
-                        h_z_s = h_z_s+ h_z
-
-                    if mi=='reverse':
-                        h_z_s = vqvae.compute_logprob_under_latent(dict(
+                    h_z_s = vqvae.compute_logprob_under_latent(dict(
                                         next_state=next_obs,
                                         skill=z_hat)).view(-1,1).detach()
-
-                    reward = h_s_z + h_z_s
-                    if target_reward:
-                        reward = reward + batch['reward']
-
-
-                    
-                    #logger.log('smm/reward',torch.mean(reward), timestep)
-                    #logger.log('smm/reward_pref',torch.mean(p_s), timestep)
-                    #logger.log('smm/p',torch.mean(h_s_z), timestep)
-                    #logger.log('smm/h_z_s',torch.mean(h_z_s), timestep)
+                    #h_z_s = norm(x=h_z_s, min=-6, max=0)
+                    reward_diversity = self.scale_factors[1]*h_z_s
+                    reward = reward_diversity + reward_exploration  
+                    reward = reward/scaling
+                   
+                    metrics_update.update({
+                        f"{info['prefix']}/reward_pref": batch['reward'].mean(),
+                        f"{info['prefix']}/reward_pref_max": batch['reward'].max(),
+                        f"{info['prefix']}/reward_pref_min": batch['reward'].min(),
+                    })
                 
-                self.update_critic(obs_z, batch['action'], reward, next_obs_z, batch['not_done_no_max'],
-                                                logger, timestep)
+                metrics_update.update({
+                        f"{info['prefix']}/reward": reward.mean(),
+                        f"{info['prefix']}/reward_min": reward.min(),
+                        f"{info['prefix']}/reward_max": reward.max(),
+                        f"{info['prefix']}/r_exploration": h_s_z.mean(),
+                        f"{info['prefix']}/r_exploration_min": h_s_z.min(),
+                        f"{info['prefix']}/r_exploration_max": h_s_z.max(),
+                        f"{info['prefix']}/r_div": reward_diversity.mean(),
+                        f"{info['prefix']}/r_div_min": reward_diversity.min(),
+                        f"{info['prefix']}/r_div_max": reward_diversity.max()
+                    })
+            
+              
+                metrics_update = self.update_critic(
+                    obs_z, batch['action'], reward, next_obs_z, batch['not_done_no_max'], metrics_update, prefix=info['prefix'])
 
                 if timestep % self.actor_update_frequency == 0:
-                    self.update_actor_and_alpha(obs_z, logger, timestep)
+                    metrics_update = self.update_actor_and_alpha(obs_z, metrics_update, prefix=info['prefix'])
 
             if timestep % self.critic_target_update_frequency == 0:
                 soft_update_params(self.critic, self.critic_target,
                                         self.critic_tau)
 
-    def update_after_reset(self, replay_buffer, logger, timestep, target_reward=False,vqvae=None, mi='reverse', gradient_update=1, policy_update=True):
+            return metrics_update
+
+    def update_after_reset(self, replay_buffer, info, vqvae=None, gradient_update=1, policy_update=True):
+        metrics_update = {}
         for index in range(gradient_update):
-            batch = replay_buffer.sample(self.batch_size)
-            
-            obs_z = torch.cat([batch['obs'],batch['skill']], dim=1)
-            next_obs_z = torch.cat([batch['next_obs'],batch['skill']], dim=1)
 
+                batch = replay_buffer.sample(self.batch_size)
 
-            h_z = np.log(self.skill_dim)  # One-hot z encoding            
-            h_z *= torch.ones_like(batch['reward']).to(self.device)
+                obs_z = torch.cat([batch['obs'], batch['skill']], dim=1)
+                next_obs_z = torch.cat([batch['next_obs'], batch['skill']], dim=1)
+                
+                obs_z_vae =  torch.cat([batch['divs'], batch['skill']], dim=1)
+                next_obs = batch['divs']
+                metrics_update, h_s_z = self.update_vae(obs_z_vae, metrics_update, info['prefix'])
+                #SMM BASIC
+                if info['objective']=='smm': #SMM BASIC
+                    #compute reward exploration
+                    reward_exploration = h_s_z
 
+                    #compute reward diversity
+                    h_z = np.log(self.skill_dim)  # One-hot z encoding            
+                    h_z *= torch.ones_like(batch['reward']).to(self.device)
 
-            next_obs = batch['divs']
-            obs_z_vae =  torch.cat([batch['divs'], batch['skill']], dim=1)
-            _, h_s_z = self.update_vae(obs_z_vae)
-            h_s_z = h_s_z.detach()
+                    metrics_update, h_z_s = self.update_pred(next_obs, batch['skill'], metrics_update, info['prefix'])
 
+                    reward_diversity = h_z + h_z_s
+                    
+                    reward = reward_diversity + reward_exploration
 
-            if vqvae==None:
-                _, h_z_s = self.update_pred(next_obs, batch['skill'])
-                reward =  h_s_z.detach() + h_z_s.detach() + h_z
-                if target_reward:
-                    reward = reward + batch['reward']
+                    metrics_update.update({
+                        'SMM/reward': reward.mean(),
+                        'SMM/r_exploration': h_s_z.mean(),
+                        'SMM/r_div': reward_diversity.mean()
+                    })
 
-            else:   
-                z_hat = torch.argmax(batch['skill'], dim=1)
-                if mi=='forward':
-                    h_z_s = vqvae.log_approx_posterior(dict(
+                if info['objective']=='smm_prior': #SMM BASIC
+                    #compute reward exploration
+                    scaling =  sum(self.scale_factors)
+                    reward_exploration = self.scale_factors[0]*h_s_z + self.scale_factors[2]*batch['reward']
+
+                    #compute reward diversity
+                    h_z = np.log(self.skill_dim)  # One-hot z encoding            
+                    h_z *= torch.ones_like(batch['reward']).to(self.device)
+
+                    metrics_update, h_z_s = self.update_pred(next_obs, batch['skill'], metrics_update, info['prefix'])
+
+                    reward_diversity = h_z + h_z_s
+                    
+                    reward = self.scale_factors[1]*reward_diversity + reward_exploration           
+                    reward = reward/scaling
+                    metrics_update.update({
+                        'SMM/reward': reward.mean(),
+                        'SMM/reward_pref': batch['reward'].mean(),
+                        'SMM/r_exploration': h_s_z.mean(),
+                        'SMM/r_div': reward_diversity.mean()
+                    })
+
+                if info['objective']=='cdp': 
+                    scaling =  sum(self.scale_factors)
+                    #compute reward exploration
+                    #h_s_z = norm(x=h_s_z, min=-0.75, max=4)
+                    reward_exploration =  self.scale_factors[0]*h_s_z
+                    if info['use_reward']:
+                        reward_exploration = reward_exploration + self.scale_factors[2]*batch['reward'].detach()
+
+                    #compute reward diversity
+                    z_hat = torch.argmax(batch['skill'], dim=1)
+                    h_z_s = vqvae.compute_logprob_under_latent(dict(
                                         next_state=next_obs,
                                         skill=z_hat)).view(-1,1).detach()
-                    h_z_s = h_z_s+ h_z
                     
-                if mi=='reverse':
-                    h_z_s = vqvae.compute_logprob_under_latent(dict(
-                                    next_state=next_obs,
-                                    skill=z_hat)).view(-1,1).detach()
-                    h_z_s = h_z_s #+ h_z
-                reward = h_s_z + h_z_s
-                if target_reward:
-                    reward = reward + batch['reward']
+                    reward_diversity = self.scale_factors[1]*h_z_s
+                    #h_z_s = norm(x=h_z_s, min=-6, max=0)
+                    reward = reward_exploration + reward_diversity 
+                    reward = reward/scaling
 
+                metrics_update.update({
+                        'SMM/reward': reward.mean(),
+                        'SMM/r_exploration': h_s_z.mean(),
+                        'SMM/r_div': reward_diversity.mean()
+                    })
 
                 
-            self.update_critic(obs_z , batch['action'], reward, next_obs_z , batch['not_done_no_max'], logger,
-                               timestep)
+                metrics_update = self.update_critic(obs_z, batch['action'], reward, next_obs_z, batch['not_done_no_max'],
+                                            metrics_update, info['prefix'])
 
-            if index % self.actor_update_frequency == 0 and policy_update:
-                self.update_actor_and_alpha(obs_z, logger, timestep)
+                if index % self.actor_update_frequency == 0 and policy_update:
+                    metrics_update = self.update_actor_and_alpha(obs_z, metrics_update, info['prefix'])
 
-            if index % self.critic_target_update_frequency == 0:
-                soft_update_params(self.critic, self.critic_target,
-                                         self.critic_tau)
+                if index % self.critic_target_update_frequency == 0:
+                    soft_update_params(self.critic, self.critic_target,
+                                                    self.critic_tau)
+                
+        return metrics_update
 
+def norm(x, min, max):
+    return (x-min)/(max-min)

@@ -1,0 +1,148 @@
+#Environment
+environment_cfg: 
+  name : 'Nav2dArea'
+  type : '2d'
+  config :
+    goal : [0.25, 0.25, 0.95, 0.95]
+    
+##wandb
+wname: 'CDP-Oracle'
+wgname: !!null
+wmode: 'disabled'  #"online"  #"disabled"
+wproject: "CDP-JAIR"
+wjobtypes: "Training"
+wnotes: "."
+wtags: ["Experiment_4",'Beta_var']
+
+##Directory
+dir: 'exp/exp4/beta_var/nav2d'
+job_id: !!null
+cuda: 0
+#Settings
+exp_setting: "oracle"
+precision: 2
+seed: 2 
+step_max: 100
+k: 20  
+prior: False
+cdp: True
+
+
+
+## Settings metrics to output
+exploration_metric: True
+coverage_metric : True
+plot_regions : True
+plot_disc: True
+plot_skill_exploration: True
+plot_reward: True
+plot_pos: False
+save_state_visited: True
+record_video: False
+
+
+##Exploration phase 
+exploration_scale_factors : [1,1,1 ] #[0.5,0.3,0.2]
+exploration_total_timesteps:  1_000_000
+exploration_random_sample : 1_000
+exploration_start_guide : 10_000
+exploration_update_guide : 5_000
+exploration_update_after_reset: 100
+exploration_diversity: 'reverse'
+exploration_evaluation_freq: 5000
+
+## Focus
+beta: 'default'
+pref_embedding: 'state'
+reward_update : 200
+max_feedback : 1400
+beta_pref: 0.9
+
+rm_name : 'pairwise-state'
+rm_net_arch: [256,256] 
+rm_segment_size: 50
+rm_batch_size: 128
+rm_query_number: 140
+rm_ensemble_size: 3
+rm_learning_rate: 3.0e-4
+rm_reward_update : 200
+rm_sampling_mode : 'uniform'
+rm_reward_mode : 'uni'
+rm_pref_mode : ''
+rm_memory_capacity: 1_000_000
+rm_hidden_size: 256
+rm_num_layers: 2
+rm_last_activation: 'tanh'
+rm_last_size: 256
+
+#Teachers
+teacher_beta: -1
+teacher_gamma: 1
+teacher_eps_mistake: 0
+teacher_eps_skip: 0
+teacher_eps_equal: 0
+
+##Discovery phase
+discovery_div_embedding : 'next_state'
+discovery_batch_size: 256
+discovery_learning_rate: 5.0e-4
+discovery_epoch: 10000
+
+discriminator_codebook_size: 8
+discriminator_code_size: 8
+discriminator_beta: 1.6
+discriminator_normalize_inputs: True
+discriminator_hidden_size: 256
+discriminator_num_layers: 3
+
+
+##Learning_phase
+learning_total_timesteps: 0 #1_000_000
+learning_learning_start :  10_000
+learning_evaluation_freq: 10_000
+
+##  Models
+smm_sp_lr: 1.0e-3
+smm_vae_lr: 1.0e-2
+smm_hidden_dim : 128
+smm_vae_beta: 0.5
+smm_code_dim: 128
+beta_smm: 0.5
+
+smm_sac_gamma: 0.99
+smm_sac_capacity: 1_000_000
+smm_sac_polyak_factor: 0.01
+smm_sac_batch_size: 256 #128
+smm_sac_train_freq: 1 
+smm_sac_gradient_steps: 1 
+smm_sac_alpha_auto : True
+smm_sac_alpha : 1
+smm_sac_actor_train_freq : 1
+smm_sac_critic_train_freq : 1
+
+##Networks
+smm_sac_learning_rate: 3.0e-3
+smm_sac_log_std_bound: [5,-2]
+smm_sac_hidden_dim: 300
+smm_sac_hidden_depth : 2 
+smm_sac_betas: [0.99,0.999]
+smm_sac_use_sde: False
+  
+
+sac_gamma: 0.99
+sac_capacity: 1_000_000
+sac_polyak_factor: 0.005
+sac_batch_size: 256 #128
+sac_train_freq: 1 
+sac_gradient_steps: 1 
+sac_alpha_auto : True
+sac_alpha : 1
+sac_actor_train_freq : 1
+sac_critic_train_freq : 1
+##Networksx
+sac_learning_rate: 1.0e-4
+sac_log_std_bound: [5,-2]
+sac_hidden_dim: 300
+sac_hidden_depth : 2 
+sac_betas: [0.99,0.999]
+sac_use_sde: False

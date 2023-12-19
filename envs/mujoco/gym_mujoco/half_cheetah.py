@@ -22,12 +22,14 @@ from gym import utils
 import numpy as np
 from gym.envs.mujoco import mujoco_env
 import gym
+import math
 
 class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
 
   def __init__(self,
                expose_all_qpos=False,
                task='forward',
+               area=None,
                target_velocity=None,
                model_path='half_cheetah.xml'):
     # Settings from
@@ -35,10 +37,17 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     self._expose_all_qpos = expose_all_qpos
     self._task = task
     self._target_velocity = target_velocity
+    self.target_area = None
+    self.positions = []
+    self.frames = []
+    if self._task == 'area_velocity':
+      self.set_target_area(area)
+
+    self.record = False
     self.prior_low_state = np.array([-1]) # x_agent,y_agent, x_goal, y_goal, distance
     self.prior_high_state = np.array([1])
     self.prior_space = gym.spaces.Box(self.prior_low_state, self.prior_high_state, dtype=np.float32)
-    xml_path = "envs/mujoco/assets/"
+    xml_path =  "envs/mujoco/assets/"
     model_path = os.path.abspath(os.path.join(xml_path, model_path))
     self._max_episode_steps = 1000
     mujoco_env.MujocoEnv.__init__(
@@ -46,6 +55,10 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         model_path,
         5)
     utils.EzPickle.__init__(self)
+
+  def set_target_area(self, area):
+    self.target_area = area
+    self.target_velocity = (area[0] + area[1]) / 2
 
   def step(self, action):
     xposbefore = self.sim.data.qpos[0]
@@ -65,6 +78,14 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
       reward_vel = 0.
       reward_run = (zposafter - zposbefore) / self.dt
       reward = reward_ctrl + reward_run      
+    elif self._task == 'area_velocity':
+      reward_vel = 0.0
+      if xvelafter >= self.target_area[0] and xvelafter <= self.target_area[1]:
+        reward_vel = 1.0
+      else:
+        reward_vel = - math.sqrt(pow((self.target_velocity-xvelafter), 2)) #/500
+      reward = reward_ctrl + reward_vel #(reward_vel+1)/2
+
     elif self._task == 'forward':
       reward_f =  0.1 if (xposafter - xposbefore) > 0 else 0
       reward = reward_f + reward_ctrl
@@ -78,15 +99,30 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
       reward = reward_ctrl + reward_vel
 
     elif self._task == 'run_back':
-      reward_vel = 0.
+      reward_vel = 0.0
       reward_run = (xposbefore - xposafter) / self.dt
       reward = reward_ctrl + reward_run
 
     done = False
-    return ob, reward, done, np.array([xvelafter]) #xvelafter]) #self.norms(xposafter)
+    self.positions.append(xposafter)
+    if self.record:
+      frame = self.render(mode='rgb_array')
+      self.frames.append(frame)
+
+
+
+    info = {
+      'x_pos': xposafter ,
+      'y_pos': 0,
+      'prior':np.array([xvelafter]) ,
+      'traj': self.positions,
+      'frames': np.array(self.frames)
+    }
+    return ob, reward, done, info  #xvelafter]) #self.norms(xposafter)
     
   def norms(self, x):
     return np.array([x])/10.0
+  
   def _get_obs(self):
     if self._expose_all_qpos:
       return np.concatenate(
@@ -102,6 +138,8 @@ class HalfCheetahEnv(mujoco_env.MujocoEnv, utils.EzPickle):
     qvel = self.init_qvel + self.np_random.randn(self.sim.model.nv) * .1
     self.set_state(qpos, qvel)
     xvelafter = self.sim.data.qvel[0]
+    self.positions = [self.sim.data.qpos[0]]
+    self.frames = []
     return self._get_obs(), np.array([xvelafter]) #np.array([xvelafter])
 
   def viewer_setup(self):
